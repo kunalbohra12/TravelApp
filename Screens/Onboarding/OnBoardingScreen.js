@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, Text, StyleSheet, SafeAreaView, ImageBackground,TouchableOpacity, Button } from 'react-native';
+import { View, Image, Text, StyleSheet, SafeAreaView, ImageBackground, TouchableOpacity, Button } from 'react-native';
 import BackgroundImage from '../../assets/Background.png';
 
 const OnBoardingScreen = ({ navigation }) => {
@@ -20,16 +20,18 @@ const OnBoardingScreen = ({ navigation }) => {
                     </View>
                     <Text style={styles.appTitle}>Travel Guide</Text>
                     <Text style={styles.appDescrptn}>Find your best place for...</Text>
-                    <TouchableOpacity
-                        style={styles.getStartedButton}
-                        onPress={() => navigation.navigate('Connect')} // Navigate to LoginScreen on press
-                    >
-                        <Text style={styles.loginButtonText}>Get Started</Text>
-                    </TouchableOpacity>
-                    <View style={styles.loginDescrptnView}>
-                        <Text style={styles.loginDescrptn}>Already have an account ? Log in</Text>
+                    <View style={styles.buttonContainerView}>
+                        <TouchableOpacity
+                            style={styles.getStartedButton}
+                            onPress={() => navigation.navigate('Connect')} // Navigate to LoginScreen on press
+                        >
+                            <Text style={{color:'white'}}>Get Started</Text>
+                        </TouchableOpacity>
+                        <View style={styles.loginDescrptnView}>
+                            <Text style={{color:'white'}}>Already have an account ? Log in</Text>
+                        </View>
                     </View>
-               
+
 
                 </ImageBackground>
                 {/* Other UI components can go here */}
@@ -74,42 +76,32 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginTop: 6
     },
-    getStartedButton:{
-        height:50,
-        backgroundColor:'green',
-        borderRadius:16,
-        alignItems:'center',
-        justifyContent:'center',
-        marginStart: 26,
-        marginEnd: 26,
-        paddingVertical: 12,
-        paddingHorizontal: 60,
-        marginVertical:340
-
-        },
-    loginDescrptnView: {
-        flexDirection: 'row',
+    buttonContainerView:{
+        flexDirection: 'column',
         justifyContent: 'center',
-        height: 30,
-        // width:300,
+        height: 95,
         marginStart: 26,
         marginEnd: 26,
         position: 'absolute',
         alignItems: 'center',
         alignSelf: 'center',
         bottom: 69, // Adjust this value to set some padding from the bottom
+        borderRadius:16
     },
-    loginDescrptn: {
-        color: 'white',
-        fontSize: 14,
-        fontWeight: 'regular',
-        textAlign: 'center'
-    },
-    loginButtonText:{
-        fontSize:16,
-        fontWeight:'medium',
-        color:'white'
-    }
+     getStartedButton:{
+        height:48,
+        backgroundColor:'#167351',
+        borderRadius:8,
+        flex:1,
+        width: 327,
+         justifyContent:'center',
+         alignItems:'center'
+     },
+     loginDescrptnView:{
+        height:20,
+        marginTop:20
+     }
+    
 });
 
 export default OnBoardingScreen;

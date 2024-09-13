@@ -10,7 +10,10 @@ const Stack = createStackNavigator();
 const App = () => {
   return (
     <NavigationContainer>
+      <StatusBar backgroundColor='white' />
+
       <Stack.Navigator initialRouteName="OnBoarding">
+
         <Stack.Screen name="OnBoarding" component={OnBoardingScreen}
           options={{ headerShown: false }}///ConnectionScrreen
         />

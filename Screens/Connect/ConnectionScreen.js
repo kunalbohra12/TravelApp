@@ -1,8 +1,13 @@
 import React from 'react';
+import { useEffect} from 'react';
 import { View, Image, Text, StyleSheet, SafeAreaView, ImageBackground, TouchableOpacity, Button } from 'react-native';
 import BackgroundImage from '../../assets/Background.png';
+import { heightPercentageToDP, horizontalScale, moderateScale, scaleSize } from '../MatricsUtils';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
 
 const ConnectionScreen = ({ navigation }) => {
+
     return (
         <SafeAreaView style={styles.container}>
 
@@ -11,8 +16,10 @@ const ConnectionScreen = ({ navigation }) => {
                 <Text style={styles.appDescrptn}>Connect with other travellers</Text>
                 <Image
                     source={require('../../assets/Trip.png')}
-                    style={styles.appIcon}
-                />
+                    style={[
+                        styles.appIcon,
+                      ]}
+                              />
                 <View style={styles.connectionOptnsView}>
                     <TouchableOpacity
                         style={styles.logInBtnView}
@@ -30,13 +37,15 @@ const ConnectionScreen = ({ navigation }) => {
                             justifyContent:'center',
                             marginTop:30,
                             borderRadius:16,
-                            borderWidth:2
+                            borderWidth:2,
+                            backgroundColor:'white'
                         }}
                         onPress={() => navigation.navigate('SignUp')} // Navigate to LoginScreen on press
                     >
                         <Text style={{colour:'black'}}>Create account</Text>
                     </TouchableOpacity>
                 </View>
+
             </View>
         </SafeAreaView>
     );
@@ -52,8 +61,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'white'
     },
     appIcon: {
-        height: 498,
         marginTop: 23,
+        height:498
     },
     appTitle: {
         fontSize: 28,
@@ -67,7 +76,7 @@ const styles = StyleSheet.create({
         fontWeight: 'medium',
         color: '#151515',
         alignSelf: 'center',
-        marginTop: 4
+        marginTop: 6
     },
     connectionOptnsView: {
         flexDirection: 'column',

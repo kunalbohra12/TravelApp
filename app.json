@@ -12,12 +12,25 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "bundleIdentifier": "com.yourname.Emirates",
+      "supportsTablet": true,
+      "config": {
+        "facebookDisplayName": "Travel Guide",
+        "facebookAppId": "392715797206549",
+        "facebookAppName": "Travel Guide"
+      }
+
     },
     "android": {
-      "adaptiveIcon": {
+      "package": "com.yourname.Emirates",
+      "adaptiveIcon":
+       {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "config": {
+        "facebookAppId": "392715797206549",
+        "facebookDisplayName": "Travel Guide"
       }
     },
     "web": {
