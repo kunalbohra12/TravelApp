@@ -5,12 +5,14 @@ import axios from 'axios';
 import FacebookIcon from '../../assets/Facebook.png';
 import TwitterIcon from '../../assets/Twitter.png';
 
-const LoginScreen = ({ navigation }) => {
+const SignUpScren = ({ navigation }) => {
   // Initialize the form
   const { control, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
+       username:'',
       email: '',
       password: '',
+      confirmPassword:''
     },
     mode: 'onChange',
   });
@@ -24,18 +26,19 @@ const LoginScreen = ({ navigation }) => {
       const response = await axios.post(
         'http://3.144.131.203/ecommerce-web/public/api/login',
         {
+          username: data.username,
           email: data.email,
           password: data.password,
+
         },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
+        // {
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //   },
+        // }
       );
       
       console.log('Response Data:', response.data);
-      navigation.navigate('Forgot')
     } catch (error) {
       console.error('Error sending data:', error.response ? error.response.data : error.message);
     }
@@ -48,8 +51,10 @@ const LoginScreen = ({ navigation }) => {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={0}
       >
-        <ScrollView contentContainerStyle={styles.contentContainer}>
-          <Text style={styles.appTitle}>Log in</Text>
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <View style={styles.contentContainer}>
+
+          <Text style={styles.appTitle}>Create Account</Text>
 
           <View style={styles.segmentView}>
             <TouchableOpacity style={styles.fbLoginBtnView} onPress={() => navigation.navigate('Login')}>
@@ -61,10 +66,29 @@ const LoginScreen = ({ navigation }) => {
               <Text style={styles.buttonText}>Twitter</Text>
             </TouchableOpacity>
           </View>
-
-          <Text style={{ color: 'black', alignSelf: 'center', marginTop: 32, fontSize: 14 }}>or log in with email</Text>
-
           <View style={styles.inputContainer}>
+          <View style={styles.userNameInputcontainer}>
+              <Controller
+                control={control}
+                name="username"
+                rules={{
+                  required: 'username is required',
+                  pattern: {
+                    message: 'Invalid username is required',
+                  },
+                }}
+                render={({ field: { onChange, value } }) => (
+                  <TextInput
+                    style={styles.input}
+                    placeholder="username"
+                    placeholderTextColor={'#000000'}
+                    value={value}
+                    onChangeText={onChange}
+                  />
+                )}
+              />
+            </View>
+            {errors.username && <Text style={styles.error}>{errors.username.message}</Text>}
             <View style={styles.emailInputContainer}>
               <Controller
                 control={control}
@@ -78,7 +102,7 @@ const LoginScreen = ({ navigation }) => {
                 }}
                 render={({ field: { onChange, value } }) => (
                   <TextInput
-                    style={styles.inputText}
+                    style={styles.input}
                     placeholder="Your email"
                     placeholderTextColor={'#000000'}
                     value={value}
@@ -101,7 +125,7 @@ const LoginScreen = ({ navigation }) => {
                 }}
                 render={({ field: { onChange, value } }) => (
                   <TextInput
-                    style={styles.inputText}
+                    style={styles.input}
                     placeholder='Password'
                     placeholderTextColor={'#000000'}
                     value={value}
@@ -112,23 +136,41 @@ const LoginScreen = ({ navigation }) => {
               />
             </View>
             {errors.password && <Text style={styles.error}>{errors.password.message}</Text>}
+            <View style={styles.confirmPasswdInputContainer}>
+              <Controller
+                control={control}
+                name="confirmPassword"
+                rules={{
+                  required: 'Confirm Password is required',
+                  minLength: {
+                    value: 6,
+                    message: 'Password must be at least 6 characters',
+                  },
+                }}
+                render={({ field: { onChange, value } }) => (
+                  <TextInput
+                    style={styles.input}
+                    placeholder='Confirm Password'
+                    placeholderTextColor={'#000000'}
+                    value={value}
+                    secureTextEntry
+                    onChangeText={onChange}
+                  />
+                )}
+              />
+            </View>
+            {errors.confirmPassword && <Text style={styles.error}>{errors.confirmPassword.message}</Text>}
           </View>
-
-          <TouchableOpacity style={{ alignSelf: 'flex-end', marginRight: 20, marginTop: 16 }}
-            onPress={() => navigation.navigate('Forgot')} // Ensure this navigates to the correct screen
-          >
-            <Text>Forgot Password?</Text>
+          <TouchableOpacity style={styles.logInBtnView} onPress={console.log('Sign Up API not Setup')}>
+            <Text style={{ color: 'white' }}>Sign Up</Text>
           </TouchableOpacity>
-
-          <TouchableOpacity style={styles.logInBtnView} onPress={handleSubmit(handleLoginManager)}>
-            <Text style={{ color: 'white' }}>Log In</Text>
-          </TouchableOpacity>
-
           <View style={styles.signUpContainer}>
-            <Text style={{ color: 'black', alignSelf: 'center' }}>Don't Have an account?</Text>
-            <TouchableOpacity style={styles.signUpBtn} onPress={() => navigation.navigate('SignUp')}>
-              <Text style={{ color: 'black' }}>Sign Up</Text>
-            </TouchableOpacity>
+            <Text style>Already have an account?</Text>
+            <TouchableOpacity style={{color:'black'}}
+             onPress={('Login')}>
+            <Text style={{ color: 'black',marginStart:5}}>Login</Text>
+          </TouchableOpacity>
+          </View>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -141,11 +183,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
-  
+  scrollContainer:{
+    flex:1,
+  },
   contentContainer: {
-    paddingHorizontal: 24,
-    paddingBottom: 32,
-    alignItems: 'center',
+   flex:1,
+   paddingBottom: 32,
+   alignItems: 'center',
   },
   appTitle: {
     fontSize: 28,
@@ -174,14 +218,25 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     marginTop: 22,
-    width: '100%',
+    width: '90%',
   },
-  emailInputContainer: {
+  userNameInputcontainer: {
     height: 48,
     borderWidth: 2,
     borderRadius: 16,
     justifyContent: 'center',
     paddingHorizontal: 15,
+    marginTop: 50,
+
+  },
+  emailInputContainer: {
+    height: 48,
+    borderWidth: 2,
+    borderRadius: 16,
+    marginTop: 20,
+    justifyContent: 'center',
+    paddingHorizontal: 15,
+
   },
   passwordInputContainer: {
     height: 48,
@@ -191,25 +246,33 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 15,
   },
-  inputText: {
-    fontSize: 16,
+  confirmPasswdInputContainer: {
+    height: 48,
+    borderWidth: 2,
+    borderRadius: 16,
+    marginTop: 20,
+    justifyContent: 'center',
+    paddingHorizontal: 15,
   },
-  passwdInput: {
+  input: {
     fontSize: 16,
   },
   logInBtnView: {
     marginTop: 16,
     height: 48,
-    width: '97%',
+    width: '90%',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#167351',
     borderRadius: 16,
   },
   signUpContainer: {
+    flexDirection:'row',
     marginTop: 80,
     alignItems: 'center',
-    width: '100%',
+    width: '70%',
+    alignSelf:'center',
+    justifyContent:'center'
   },
   signUpBtn: {
     marginTop: 16,
@@ -227,4 +290,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+export default SignUpScren;

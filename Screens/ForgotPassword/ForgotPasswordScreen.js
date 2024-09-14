@@ -2,15 +2,16 @@ import React from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, KeyboardAvoidingView, Platform, ScrollView,Image } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import axios from 'axios';
-import FacebookIcon from '../../assets/Facebook.png';
-import TwitterIcon from '../../assets/Twitter.png';
+import ForgotIcon from '../../assets/Forgot.png';
 
-const LoginScreen = ({ navigation }) => {
+const ForgotPasswordScreen = ({ navigation }) => {
   // Initialize the form
   const { control, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
+       username:'',
       email: '',
       password: '',
+      confirmPassword:''
     },
     mode: 'onChange',
   });
@@ -24,18 +25,19 @@ const LoginScreen = ({ navigation }) => {
       const response = await axios.post(
         'http://3.144.131.203/ecommerce-web/public/api/login',
         {
+          username: data.username,
           email: data.email,
           password: data.password,
+
         },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
+        // {
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //   },
+        // }
       );
       
       console.log('Response Data:', response.data);
-      navigation.navigate('Forgot')
     } catch (error) {
       console.error('Error sending data:', error.response ? error.response.data : error.message);
     }
@@ -48,22 +50,16 @@ const LoginScreen = ({ navigation }) => {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={0}
       >
-        <ScrollView contentContainerStyle={styles.contentContainer}>
-          <Text style={styles.appTitle}>Log in</Text>
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <View style={styles.contentContainer}>
 
-          <View style={styles.segmentView}>
-            <TouchableOpacity style={styles.fbLoginBtnView} onPress={() => navigation.navigate('Login')}>
-              <Image source={FacebookIcon} style={{ marginLeft: 20 }} />
-              <Text style={styles.buttonText}>Facebook</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.fbLoginBtnView, { marginLeft: 13 }]} onPress={() => navigation.navigate('Login')}>
-              <Image source={TwitterIcon} style={{ marginLeft: 20 }} />
-              <Text style={styles.buttonText}>Twitter</Text>
-            </TouchableOpacity>
-          </View>
-
-          <Text style={{ color: 'black', alignSelf: 'center', marginTop: 32, fontSize: 14 }}>or log in with email</Text>
-
+          <Text style={styles.appTitle}>Forgot Paswword</Text> 
+          <Image style={styles.ForgotImage}
+           source={ForgotIcon}
+          >
+            
+          </Image>
+          <Text style={{ color: 'lightgray',marginStart:40,marginRight:40,marginTop:22,textAlign:'center'}}>Enter your email below to receive your password reset instructions</Text>
           <View style={styles.inputContainer}>
             <View style={styles.emailInputContainer}>
               <Controller
@@ -78,7 +74,7 @@ const LoginScreen = ({ navigation }) => {
                 }}
                 render={({ field: { onChange, value } }) => (
                   <TextInput
-                    style={styles.inputText}
+                    style={styles.input}
                     placeholder="Your email"
                     placeholderTextColor={'#000000'}
                     value={value}
@@ -88,47 +84,11 @@ const LoginScreen = ({ navigation }) => {
               />
             </View>
             {errors.email && <Text style={styles.error}>{errors.email.message}</Text>}
-            <View style={styles.passwordInputContainer}>
-              <Controller
-                control={control}
-                name="password"
-                rules={{
-                  required: 'Password is required',
-                  minLength: {
-                    value: 6,
-                    message: 'Password must be at least 6 characters',
-                  },
-                }}
-                render={({ field: { onChange, value } }) => (
-                  <TextInput
-                    style={styles.inputText}
-                    placeholder='Password'
-                    placeholderTextColor={'#000000'}
-                    value={value}
-                    secureTextEntry
-                    onChangeText={onChange}
-                  />
-                )}
-              />
-            </View>
-            {errors.password && <Text style={styles.error}>{errors.password.message}</Text>}
           </View>
-
-          <TouchableOpacity style={{ alignSelf: 'flex-end', marginRight: 20, marginTop: 16 }}
-            onPress={() => navigation.navigate('Forgot')} // Ensure this navigates to the correct screen
-          >
-            <Text>Forgot Password?</Text>
+          <TouchableOpacity style={styles.logInBtnView} onPress={console.log('Sign Up API not Setup')}>
+            <Text style={{ color: 'white' }}>send Password</Text>
           </TouchableOpacity>
-
-          <TouchableOpacity style={styles.logInBtnView} onPress={handleSubmit(handleLoginManager)}>
-            <Text style={{ color: 'white' }}>Log In</Text>
-          </TouchableOpacity>
-
-          <View style={styles.signUpContainer}>
-            <Text style={{ color: 'black', alignSelf: 'center' }}>Don't Have an account?</Text>
-            <TouchableOpacity style={styles.signUpBtn} onPress={() => navigation.navigate('SignUp')}>
-              <Text style={{ color: 'black' }}>Sign Up</Text>
-            </TouchableOpacity>
+            <Text style={{ color: 'black',marginStart:5,marginTop:90}}>I remember the password</Text>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -141,11 +101,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
-  
+  scrollContainer:{
+    flex:1,
+  },
   contentContainer: {
-    paddingHorizontal: 24,
-    paddingBottom: 32,
-    alignItems: 'center',
+   flex:1,
+   paddingBottom: 32,
+   alignItems: 'center',
   },
   appTitle: {
     fontSize: 28,
@@ -174,14 +136,25 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     marginTop: 22,
-    width: '100%',
+    width: '90%',
   },
-  emailInputContainer: {
+  userNameInputcontainer: {
     height: 48,
     borderWidth: 2,
     borderRadius: 16,
     justifyContent: 'center',
     paddingHorizontal: 15,
+    marginTop: 50,
+
+  },
+  emailInputContainer: {
+    height: 48,
+    borderWidth: 2,
+    borderRadius: 16,
+    marginTop: 20,
+    justifyContent: 'center',
+    paddingHorizontal: 15,
+
   },
   passwordInputContainer: {
     height: 48,
@@ -191,25 +164,33 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 15,
   },
-  inputText: {
-    fontSize: 16,
+  confirmPasswdInputContainer: {
+    height: 48,
+    borderWidth: 2,
+    borderRadius: 16,
+    marginTop: 20,
+    justifyContent: 'center',
+    paddingHorizontal: 15,
   },
-  passwdInput: {
+  input: {
     fontSize: 16,
   },
   logInBtnView: {
     marginTop: 16,
     height: 48,
-    width: '97%',
+    width: '90%',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#167351',
     borderRadius: 16,
   },
   signUpContainer: {
+    flexDirection:'row',
     marginTop: 80,
     alignItems: 'center',
-    width: '100%',
+    width: '70%',
+    alignSelf:'center',
+    justifyContent:'center'
   },
   signUpBtn: {
     marginTop: 16,
@@ -225,6 +206,12 @@ const styles = StyleSheet.create({
     textAlign:'left',
     marginLeft:10
   },
+  ForgotImage:{
+    height:227,
+    marginTop:40,
+    width:'100%',
+    resizeMode:'contain'
+  }
 });
 
-export default LoginScreen;
+export default ForgotPasswordScreen;
