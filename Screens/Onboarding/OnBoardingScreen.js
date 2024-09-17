@@ -23,7 +23,7 @@ const OnBoardingScreen = ({ navigation }) => {
                     <View style={styles.buttonContainerView}>
                         <TouchableOpacity
                             style={styles.getStartedButton}
-                            onPress={() => navigation.navigate('Connect')} // Navigate to LoginScreen on press
+                            onPress={() => navigation.navigate('Destination')} // Navigate to LoginScreen on press
                         >
                             <Text style={{color:'white'}}>Get Started</Text>
                         </TouchableOpacity>

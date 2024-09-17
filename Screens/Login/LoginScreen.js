@@ -4,7 +4,7 @@ import { useForm, Controller } from 'react-hook-form';
 import axios from 'axios';
 import FacebookIcon from '../../assets/Facebook.png';
 import TwitterIcon from '../../assets/Twitter.png';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const LoginScreen = ({ navigation }) => {
   // Initialize the form
   const { control, handleSubmit, formState: { errors } } = useForm({
@@ -27,15 +27,17 @@ const LoginScreen = ({ navigation }) => {
           email: data.email,
           password: data.password,
         },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
       );
       
-      console.log('Response Data:', response.data);
-      navigation.navigate('Forgot')
+      if (response.data.success) {
+        const userData = response.data; // Assume these fields are in the response
+        // Navigate to HomeScreen after successful login
+        navigation.navigate('Destination');
+        console.log('push to Destination');
+
+      } else {
+        console.log('Error', response.message);
+      }
     } catch (error) {
       console.error('Error sending data:', error.response ? error.response.data : error.message);
     }

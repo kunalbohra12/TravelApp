@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, KeyboardAvoidingView, Platform, ScrollView,Image } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, KeyboardAvoidingView, Platform, ScrollView,Image, Alert } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import axios from 'axios';
 import ForgotIcon from '../../assets/Forgot.png';
@@ -8,27 +8,21 @@ const ForgotPasswordScreen = ({ navigation }) => {
   // Initialize the form
   const { control, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
-       username:'',
       email: '',
-      password: '',
-      confirmPassword:''
     },
     mode: 'onChange',
   });
 
   // Handle form submission
-  const handleLoginManager = async (data) => {
+  const handleForgotPasswdManager = async (data) => {
     try {
       console.log('Form data:', data);
       
       // API endpoint
       const response = await axios.post(
-        'http://3.144.131.203/ecommerce-web/public/api/login',
+        'http://3.144.131.203/ecommerce-web/public/api/forgot-password',
         {
-          username: data.username,
           email: data.email,
-          password: data.password,
-
         },
         // {
         //   headers: {
@@ -36,8 +30,13 @@ const ForgotPasswordScreen = ({ navigation }) => {
         //   },
         // }
       );
-      
-      console.log('Response Data:', response.data);
+      if (response.data != null){
+        // console.log('Response Data:', response.message);
+        Alert.alert('Message',response.message)
+      }
+       else{
+        console.log('Forgot Api Failed:', response.message);
+       }
     } catch (error) {
       console.error('Error sending data:', error.response ? error.response.data : error.message);
     }
@@ -85,7 +84,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
             </View>
             {errors.email && <Text style={styles.error}>{errors.email.message}</Text>}
           </View>
-          <TouchableOpacity style={styles.logInBtnView} onPress={console.log('Sign Up API not Setup')}>
+          <TouchableOpacity style={styles.logInBtnView} onPress={(handleSubmit(handleForgotPasswdManager))}>
             <Text style={{ color: 'white' }}>send Password</Text>
           </TouchableOpacity>
             <Text style={{ color: 'black',marginStart:5,marginTop:90}}>I remember the password</Text>
