@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Image, Text, StyleSheet, SafeAreaView, ImageBackground, TouchableOpacity, Button } from 'react-native';
 import BackgroundImage from '../../assets/Background.png';
-
 const OnBoardingScreen = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.container}>
@@ -23,7 +22,7 @@ const OnBoardingScreen = ({ navigation }) => {
                     <View style={styles.buttonContainerView}>
                         <TouchableOpacity
                             style={styles.getStartedButton}
-                            onPress={() => navigation.navigate('Destination')} // Navigate to LoginScreen on press
+                            onPress={() => navigation.navigate('TabBar')} // Navigate to LoginScreen on press
                         >
                             <Text style={{color:'white'}}>Get Started</Text>
                         </TouchableOpacity>

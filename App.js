@@ -9,7 +9,12 @@ import OnBoardingScreen from './Screens/Onboarding/OnBoardingScreen';
 import ConnectionScreen from './Screens/Connect/ConnectionScreen';
 import ForgotPasswordScreen from './Screens/ForgotPassword/ForgotPasswordScreen';
 import TouchIdScreen from './Screens/TouchID/TouchIDScreen';
+import HomeScreen from './Screens/Home/HomeScreen';
 import DestinationScreen from './Screens/Destination/DestinationScreen';
+import BottomTabBarScreen from './TabBar/BottomTabBar';
+import { LogBox } from 'react-native';
+LogBox.ignoreAllLogs(); // Ignores all warning messages
+
 const Stack = createStackNavigator();
 
 const App = () => {
@@ -21,6 +26,14 @@ const App = () => {
 
         <Stack.Screen name="OnBoarding" component={OnBoardingScreen}
           options={{ headerShown: false }}///ConnectionScrreen
+        />
+          <Stack.Screen name="Dashboard" component={DestinationScreen}
+          options={{ headerShown: false }}///ConnectionScrreen
+        />
+         <Stack.Screen
+          name="TabBar"
+          component={BottomTabBarScreen}
+          options={{ headerShown: false }}
         />
         {/* <Stack.Screen name="Connect" component={ConnectionScreen}
           options={{ headerShown: false }}///ConnectionScrreen
@@ -37,7 +50,7 @@ const App = () => {
         <Stack.Screen name="TouchId" component={TouchIdScreen}
           options={{ headerShown: false }}///ConnectionScrreen
         /> */}
-        <Stack.Screen name="Destination" component={DestinationScreen}
+        <Stack.Screen name="Home" component={HomeScreen}
           options={{ headerShown: false }}///ConnectionScrreen
         />
       </Stack.Navigator>
