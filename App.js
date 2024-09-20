@@ -27,7 +27,7 @@ const App = () => {
         <Stack.Screen name="OnBoarding" component={OnBoardingScreen}
           options={{ headerShown: false }}///ConnectionScrreen
         />
-          <Stack.Screen name="Dashboard" component={DestinationScreen}
+          <Stack.Screen name="Destination" component={DestinationScreen}
           options={{ headerShown: false }}///ConnectionScrreen
         />
          <Stack.Screen

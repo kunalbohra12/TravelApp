@@ -1,10 +1,12 @@
-
 import React from 'react';
 import { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, FlatList, Platform, ScrollView, Image, Alert, ImageBackground, Animated } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import axios from 'axios';
-import MenuIcon from '../../../assets'; // Adjust the path based on the new folder depth
+import { images } from '../../../HelperFiles/Images/Images';
+import PagerView from 'react-native-pager-view';
+import Dots from 'react-native-dots-pagination';
+import CustomListView from '../ListView/CustomListView';
 const ExploreScreen = ({ navigation }) => {
     const scrollX = React.useRef(new Animated.Value(0)).current;
     const [currentPage, setCurrentPage] = useState(0); // State to track the current page
@@ -20,102 +22,22 @@ const ExploreScreen = ({ navigation }) => {
     const onPageSelected = (e) => {
         setCurrentPage(e.nativeEvent.position); // Update current page when swiped
     };
- 
+
     const pages = [
-        { key: '0', tripImages: BackgroundImage, menuIcon: MenuIcon, searchIcon: SearchIcon,title:'Rome',placeDescrption:'The city setting is stunning with a rich architectural and historical heritage',buttonTitle:'Book Now'},
-        { key: '1', tripImages: BackgroundImage, menuIcon: MenuIcon, searchIcon: SearchIcon,title:'Rome',placeDescrption:'The city setting is stunning with a rich architectural and historical heritage',buttonTitle:'Book Now'},
-        { key: '2', tripImages: BackgroundImage, menuIcon: MenuIcon, searchIcon: SearchIcon,title:'Rome',placeDescrption:'The city setting is stunning with a rich architectural and historical heritage',buttonTitle:'Book Now'},
+        { key: '0', tripImages: images.backImage, menuIcon: images.MenuIcon, searchIcon: images.SearchIcon, title: 'Rome', placeDescrption: 'The city setting is stunning with a rich architectural and historical heritage', buttonTitle: 'Book Now' },
+        { key: '1', tripImages: images.backImage, menuIcon: images.MenuIcon, searchIcon: images.SearchIcon, title: 'Rome', placeDescrption: 'The city setting is stunning with a rich architectural and historical heritage', buttonTitle: 'Book Now' },
+        { key: '2', tripImages: images.backImage, menuIcon: images.MenuIcon, searchIcon: images.SearchIcon, title: 'Rome', placeDescrption: 'The city setting is stunning with a rich architectural and historical heritage', buttonTitle: 'Book Now' },
     ];
 
     return (
 
         // <SafeAreaView style={styles.safeAreaViewContainer}>
         <View style={styles.container}>
-            <View style={{ flex: 1 }}>
-                {/* <PagerView
-                    style={styles.pagerView}
+              <ScrollView contentContainerStyle={{ flexGrow: 1,paddingBottom:60}}>
+              <View style={{ flex: 1 }}>
+                <PagerView style={styles.pagerView}
                     initialPage={0}
-                    onPageScroll={onPageSelected} // Attach the event handler
-                >
-                    <View key="0" style={styles.page1}>
-                        <ImageBackground
-                            source={BackgroundImage}
-                            style={styles.backImage}
-                        >
-                            <View style={styles.headerView}>
-                                <TouchableOpacity style={styles.menuBtn}>
-                                    <Image
-                                        source={MenuIcon}
-                                    />
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.menuBtn}>
-                                    <Image
-                                        source={SearchIcon}
-                                    />
-                                </TouchableOpacity>
-                            </View>
-                            <Text style={styles.placeTitle} >Rome</Text>
-                            <Text style={styles.placeDescrptn} >The city setting is stunning with a rich architectural and historical heritage</Text>
-                            <TouchableOpacity style={styles.bookBtn}>
-                                <Text style={{ color: 'white' }}>Book now</Text>
-                            </TouchableOpacity>
-                            <Dots
-        
-                            />
-                        </ImageBackground>
-                    </View>
-                    <View key="1" style={styles.page2}>
-                        <ImageBackground
-                            source={BackgroundImage}
-                            style={styles.backImage}
-                        >
-                            <View style={styles.headerView}>
-                                <TouchableOpacity style={styles.menuBtn}>
-                                    <Image
-                                        source={MenuIcon}
-                                    />
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.menuBtn}>
-                                    <Image
-                                        source={SearchIcon}
-                                    />
-                                </TouchableOpacity>
-                            </View>
-                            <Text style={styles.placeTitle} >Rome</Text>
-                            <Text style={styles.placeDescrptn} >The city setting is stunning with a rich architectural and historical heritage</Text>
-                            <TouchableOpacity style={styles.bookBtn}>
-                                <Text style={{ color: 'white' }}>Book now</Text>
-                            </TouchableOpacity>
-                        </ImageBackground>
-                    </View>
-                    <View key="2" style={styles.page3}>
-                        <ImageBackground
-                            source={BackgroundImage}
-                            style={styles.backImage}
-                        >
-                            <View style={styles.headerView}>
-                                <TouchableOpacity style={styles.menuBtn}>
-                                    <Image
-                                        source={MenuIcon}
-                                    />
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.menuBtn}>
-                                    <Image
-                                        source={SearchIcon}
-                                    />
-                                </TouchableOpacity>
-                            </View>
-                            <Text style={styles.placeTitle} >Rome</Text>
-                            <Text style={styles.placeDescrptn} >The city setting is stunning with a rich architectural and historical heritage</Text>
-                            <TouchableOpacity style={styles.bookBtn}>
-                                <Text style={{ color: 'white' }}>Book now</Text>
-                            </TouchableOpacity>
-                        </ImageBackground>
-                    </View>
-                </PagerView> */}
-                <PagerView style={styles.pagerView} 
-                initialPage={0}
-                 onPageScroll={onPageSelected}> 
+                    onPageScroll={onPageSelected}>
                     {pages.map((page) => (
                         <View key={page.key} style={styles.page1}>
                             <ImageBackground
@@ -123,42 +45,84 @@ const ExploreScreen = ({ navigation }) => {
                                 style={styles.backImage}
                             >
                                 <View style={styles.headerView}>
-                                <TouchableOpacity style={styles.menuBtn}>
-                                    <Image
-                                        source={page.menuIcon}
-                                    />
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.menuBtn}>
-                                    <Image
-                                        source={page.searchIcon}
-                                    />
-                                </TouchableOpacity>
+                                    <TouchableOpacity style={styles.menuBtn}>
+                                        <Image
+                                            source={page.menuIcon}
+                                        />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={styles.menuBtn}>
+                                        <Image
+                                            source={page.searchIcon}
+                                        />
+                                    </TouchableOpacity>
                                 </View>
                                 <Text style={styles.placeTitle} >{page.title}</Text>
                                 <Text style={styles.placeDescrptn} >{page.placeDescrption}</Text>
                                 <View style={styles.stackView}>
-                                <TouchableOpacity style={styles.bookBtn}>
-                                <Text style={{ color: 'white' }}>{page.buttonTitle}</Text>
-                                </TouchableOpacity>
-                                <View style={styles.dotView}>
-                                <Dots
-                                    length={3}                 // Total number of dots/pages
-                                    active={currentPage}   // Current active page index
-                                    activeColor='#FFCF4A'        // Active dot color
-                                    passiveColor='gray'         // Inactive dot color
-                                    marginHorizontal={4}        // Adjusts spacing between dots
-                                    passiveDotWidth={10}         // Width of inactive dots
-                                    activeDotWidth={10}         // Width of active dot
-                                />
+                                    <TouchableOpacity style={styles.bookBtn}>
+                                        <Text style={{ color: 'white' }}>{page.buttonTitle}</Text>
+                                    </TouchableOpacity>
+                                    <View style={styles.dotView}>
+                                        <Dots
+                                            length={3}                 // Total number of dots/pages
+                                            active={currentPage}   // Current active page index
+                                            activeColor='#FFCF4A'        // Active dot color
+                                            passiveColor='gray'         // Inactive dot color
+                                            marginHorizontal={4}        // Adjusts spacing between dots
+                                            passiveDotWidth={10}         // Width of inactive dots
+                                            activeDotWidth={10}         // Width of active dot
+                                        />
+                                    </View>
+
                                 </View>
-                                
-                                </View>
-                             </ImageBackground>
+                            </ImageBackground>
                         </View>
                     ))}
                 </PagerView>
-            </View>
+                <View style={{ flex: 0.4 }}>
+                    <View style={styles.btnStackView}>
+                        <TouchableOpacity>
+                            <View style={styles.tripOptionsBtn}>
+                                <Image
+                                    source={images.HotelIcon}
+                                />
+                                <Text style={styles.title} >Hotels</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                            <View style={styles.tripOptionsBtn}>
+                                <Image
+                                    source={images.FightIcon}
+                                />
+                                <Text style={styles.title} >Flight</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                            <View style={styles.tripOptionsBtn}>
+                                <Image
+                                    source={images.TodoIcon}
+                                />
+                                <Text style={styles.title} >To do</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                            <View style={styles.tripOptionsBtn}>
+                                <Image
+                                    source={images.AdventureIcon}
+                                />
+                                <Text style={styles.title} >Adventures</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>  
+                    <CustomListView/>
+                    <CustomListView/>
 
+                    {/* <CustomListView/>
+                    <CustomListView/> */}
+                
+                </View>
+            </View>
+            </ScrollView>
         </View>
         // </SafeAreaView >
 
@@ -177,12 +141,12 @@ const styles = StyleSheet.create({
         backgroundColor: 'white'
     },
     pagerView: {
-        flex: 0.6,
+        height: 350,
         backgroundColor: 'black'
     },
     page1: {
         flex: 1,
-        backgroundColor: 'darkblue'
+        backgroundColor: 'white'
     },
     headerView: {
         flexDirection: 'row',        // Aligns children in a row
@@ -216,7 +180,7 @@ const styles = StyleSheet.create({
     backImage: {
         flex: 1
     },
-    stackView:{
+    stackView: {
         flexDirection: 'row',        // Aligns children in a row
         justifyContent: 'space-between', // Pushes the buttons to flex-start and flex-end
         alignItems: 'center',        // Vertically centers the items (optional)
@@ -224,8 +188,8 @@ const styles = StyleSheet.create({
         marginTop: 12,
         // marginHorizontal:24,
         marginLeft: 24,
-        marginRight:24,
-        backgroundColor:'black'
+        marginRight: 24,
+        // backgroundColor:'black'
     },
     bookBtn: {
         height: 48,
@@ -235,8 +199,32 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         width: 150
     },
-    dotView:{
-        marginRight:24
+    dotView: {
+        marginRight: 24
+    },
+    title: {
+        color: '#151515',
+        fontSize: 10,
+        fontWeight: 'regular',
+        // marginLeft:5,
+        // marginRight:5
+    },
+    tripOptionsBtn: {
+        width: 52,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 19
+    },
+    btnStackView: {
+        width: '80%',
+        marginLeft: 37,
+        backgroundColor: 'white',
+        flexDirection: 'row',
+        height: 50,
+        marginTop: 15,
+        marginHorizontal: 15,
+        alignItems: 'center',
+        alignSelf: 'center'
     }
 });
 

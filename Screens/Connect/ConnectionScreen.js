@@ -4,7 +4,7 @@ import { View, Image, Text, StyleSheet, SafeAreaView, ImageBackground, Touchable
 import BackgroundImage from '../../assets/Background.png';
 import { heightPercentageToDP, horizontalScale, moderateScale, scaleSize } from '../MatricsUtils';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
+import { images } from '../../HelperFiles/Images/Images'; // Import all images from the images.js file
 
 const ConnectionScreen = ({ navigation }) => {
 
@@ -15,7 +15,7 @@ const ConnectionScreen = ({ navigation }) => {
                 <Text style={styles.appTitle}>Plan your trips</Text>
                 <Text style={styles.appDescrptn}>Connect with other travellers</Text>
                 <Image
-                    source={require('../../assets/Trip.png')}
+                    source={images.tripIcon}
                     style={[
                         styles.appIcon,
                       ]}

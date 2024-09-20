@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, KeyboardAvoidingView, Platform, ScrollView,Image } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import axios from 'axios';
+import { images } from '../../HelperFiles/Images/Images';
 import FacebookIcon from '../../assets/Facebook.png';
 import TwitterIcon from '../../assets/Twitter.png';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -55,11 +56,11 @@ const LoginScreen = ({ navigation }) => {
 
           <View style={styles.segmentView}>
             <TouchableOpacity style={styles.fbLoginBtnView} onPress={() => navigation.navigate('Login')}>
-              <Image source={FacebookIcon} style={{ marginLeft: 20 }} />
+              <Image source={images.FacebookIcon} style={{ marginLeft: 20 }} />
               <Text style={styles.buttonText}>Facebook</Text>
             </TouchableOpacity>
             <TouchableOpacity style={[styles.fbLoginBtnView, { marginLeft: 13 }]} onPress={() => navigation.navigate('Login')}>
-              <Image source={TwitterIcon} style={{ marginLeft: 20 }} />
+              <Image source={images.TwitterIcon} style={{ marginLeft: 20 }} />
               <Text style={styles.buttonText}>Twitter</Text>
             </TouchableOpacity>
           </View>

@@ -7,8 +7,9 @@ import DashboardScreen from '../Screens/Home/HomeScreen';
 import HomeScreen from '../Screens/Destination/DestinationScreen';
 import ForgotPasswordScreen from '../Screens/ForgotPassword/ForgotPasswordScreen';
 import ConnectionScreen from '../Screens/Connect/ConnectionScreen';
-
-// Import custom icons
+import ExploreScreen from '../Screens/Dashboard/Explore/ExploreScreen';
+// Import custom icon
+import { images } from '../HelperFiles/Images/Images';
 import ExploreIcon from '../assets/Explore.png';
 import TripIcon from '../assets/Trips.png';
 import SavedIcon from '../assets/Saved.png';
@@ -25,22 +26,21 @@ const BottomTabBarScreen = () => {
         tabBarIcon: ({ focused, color, size }) => {
           let iconSource;
           if (route.name === 'Explore') {
-            iconSource = focused ? ExploreIcon : ExploreIcon; // Use different images if you have active/inactive states
+            iconSource = focused ? images.ExploreIcon : images.ExploreIcon; // Use different images if you have active/inactive states
           } else if (route.name === 'Trips') {
-            iconSource = focused ? TripIcon : TripIcon; // Use different images if you have active/inactive states
+            iconSource = focused ? images.Trips : images.Trips; // Use different images if you have active/inactive states
           } else if (route.name === 'Saved') {
-            iconSource = focused ? SavedIcon : SavedIcon; // Use different images if you have active/inactive states
+            iconSource = focused ? images.SavedIcon : images.SavedIcon; // Use different images if you have active/inactive states
           } else if (route.name === 'Inbox') {
-            iconSource = focused ? InboxIcon : InboxIcon; // Use different images if you have active/inactive states
-          }
-          else if (route.name === 'Profile') {
+            iconSource = focused ? images.InboxIcon : images.InboxIcon; // Use different images if you have active/inactive states
+          }else if (route.name === 'Profile') {
             iconSource = focused ? ProfileIcon : ProfileIcon; // Use different images if you have active/inactive states
           }
           return (
               <View>
                 <Image
                   source={iconSource}
-                  style={{ width: 33, height: 30, tintColor: color }}
+                  style={{ width: 20, height: 20, tintColor: color }}
                 />
                 {/* <View
                   style={{
@@ -94,7 +94,7 @@ const BottomTabBarScreen = () => {
         options={{ headerShown: false }}
         
       />
-    <Tab.Screen name="Profile" component={ConnectionScreen}
+      <Tab.Screen name="Profile" component={ConnectionScreen}
         options={{ headerShown: false }}
         
       />

@@ -15,7 +15,7 @@ import LeftNavigation from '../../assets/LeftNavigation.png';
 import PlacesIconOne from '../../assets/Paris.png';
 import PlacesIconTwo from '../../assets/NewYork.png';
 import PlacesIconThree from '../../assets/London.png';
-
+import { images } from '../../HelperFiles/Images/Images';
 const DestinationScreen = ({ navigation }) => {
     const scrollX = React.useRef(new Animated.Value(0)).current;
     const [currentPage, setCurrentPage] = useState(0); // State to track the current page
@@ -50,11 +50,9 @@ const DestinationScreen = ({ navigation }) => {
     };
     return (
 
-        <SafeAreaView style={styles.safeAreaViewContainer}>
-            {/* <ScrollView 
-            style={styles.scrollViewStyle}
-            contentContainerStyle={styles.contentContainerStyle}> */}
-            <View style={styles.container}>
+        <View style={styles.safeAreaViewContainer}>
+              <ScrollView contentContainerStyle={{ flexGrow: 1}}>
+              <View style={styles.container}>
                 <PagerView
                     style={styles.pagerView}
                     initialPage={0}
@@ -97,25 +95,25 @@ const DestinationScreen = ({ navigation }) => {
                         <View style={styles.gridContainer}>
                             <View style={[styles.gridView, { marginLeft: -22, marginTop: -82 }]}>
                                 <Image
-                                    source={BridgeIcon}
+                                    source={images.BridgeIcon}
                                     style={styles.rhombusImage}
                                 />
                             </View>
                             <View style={[styles.gridView, { marginLeft: 35, marginTop: -72 }]}>
                                 <Image
-                                    source={DestinationImage}
+                                    source={images.DestinationIcon}
                                     style={styles.rhombusImage}
                                 />
                             </View>
                             <View style={[styles.gridView, { marginLeft: 35, marginTop: -72 }]}>
                                 <Image
-                                    source={DestinationImage}
+                                    source={images.DestinationIcon}
                                     style={styles.rhombusImage}
                                 />
                             </View>
                             <View style={[styles.gridView, { marginLeft: 35, marginTop: -72 }]}>
                                 <Image
-                                    source={DestinationImage}
+                                    source={images.DestinationIcon}
                                     style={styles.rhombusImage}
                                 />
                             </View>
@@ -123,16 +121,18 @@ const DestinationScreen = ({ navigation }) => {
                         <Text style={[styles.inspireText, { textAlign: 'center', marginLeft: 44, marginRight: 44 }]}>We’re happy to share our best tips for destinations where you can relax. But you find the nicest city trips as well!</Text>
                     </View>
                     <View key="2" style={[styles.page, { backgroundColor: 'white' }]}>
-                        <ScrollView>
-                            <TouchableOpacity style={styles.backNavigationBtn}>
+                            <TouchableOpacity style={styles.backNavigationBtn}
+                             onPress={navigation.} // Attach onPress event handler
+
+                            >
                                 <Image
-                                    source={LeftNavigation}
+                                    source={images.LeftNavigationIcon}
                                 />
                             </TouchableOpacity>
                             <Text style={styles.dealsTitle}>Find best deals</Text>
                             <View style={styles.dealsImageView}>
                                 <ImageBackground
-                                    source={PlaceIcon}
+                                    source={images.RomeIcon}
                                     style={styles.dealsImages}>
                                     <Text style={styles.placeText}>Rome</Text>
                                 </ImageBackground>
@@ -143,7 +143,7 @@ const DestinationScreen = ({ navigation }) => {
                             <View style={styles.stackView}>
                                 <View style={styles.imageStackView}>
                                     <ImageBackground
-                                        source={PlacesIconOne}
+                                        source={images.ParisIcon}
                                         style={styles.dealsImages}
                                     >
                                         <Text style={{ fontSize: 24, fontWeight: 'bold', color: 'white' }}>Paris</Text>
@@ -155,7 +155,7 @@ const DestinationScreen = ({ navigation }) => {
                                 </View>
                                 <View style={[styles.imageStackView, { marginLeft: 12 }]}>
                                     <ImageBackground
-                                        source={PlacesIconTwo}
+                                        source={images.NewYorkIcon}
                                         style={styles.dealsImages}
                                     >
                                         <Text style={styles.placeText}>New York</Text>
@@ -167,7 +167,7 @@ const DestinationScreen = ({ navigation }) => {
                             </View>
                             <View style={styles.dealsImageView}>
                                 <ImageBackground
-                                    source={PlacesIconThree}
+                                    source={images.LondonIcon}
                                     style={styles.dealsImages}
                                 >
                                     <Text style={styles.placeText}>London</Text>
@@ -180,13 +180,12 @@ const DestinationScreen = ({ navigation }) => {
                             <TouchableOpacity style={styles.getStartedBtn}>
                                 <Text style={{ color: 'white', fontWeight: 'medium', fontSize: 16 }}>Get Started</Text>
                             </TouchableOpacity>
-                        </ScrollView>
                     </View>
                     {/* ))} */}
                 </PagerView>
-                {/* <View style={styles.dotViewContainer}>
+                <View style={styles.dotViewContainer}>
                         <Dots
-                            length={pages.length} // Total number of pages
+                            length={3} // Total number of pages
                             active={currentPage}   // Current active page index
                             activeDotWidth={10}    // Width of the active dot
                             passiveDotWidth={10}    // Width of the inactive dot
@@ -199,10 +198,11 @@ const DestinationScreen = ({ navigation }) => {
                                 source={NavigateIcon}
                             />
                         </TouchableOpacity>
-                    </View> */}
+                    </View>
             </View>
-            {/* </ScrollView> */}
-        </SafeAreaView>
+            </ScrollView>
+        </View>
+
 
 
     );
@@ -261,120 +261,10 @@ const DestinationScreen = ({ navigation }) => {
     // );
 };
 
-
-
-
-
-
-
-// const styles = StyleSheet.create({
-
-//     container: {
-//         flex: 1,
-//         justifyContent: 'center',
-//         alignItems: 'center',
-//         backgroundColor: 'white'
-//     },
-//     maskContainer: {
-//         flexDirection: 'row',
-//         width: '100%',
-//         backgroundColor: 'white',
-//         height: 105
-//     },
-//     gridContainer: {
-//         flexDirection: 'row',
-//         width: '100%',
-//         backgroundColor: 'white',
-//         height: 105,
-//         // marginTop:-8
-//     },
-//     rhombusView: {
-//         width: 75, // Width of the rhombus
-//         height: 75, // Height of the rhombus (it’s a square rotated 45 degrees)
-//         backgroundColor: 'blue', // Background color
-//         transform: [{ rotate: '45deg' }], // Rotates the square by 45 degrees
-//         alignSelf: 'center',
-//         marginLeft: 34,
-//         justifyContent: 'center',
-//         alignItems: 'center',
-//         overflow: 'hidden'
-//     },
-//     gridView: {
-//         width: 75, // Width of the rhombus
-//         height: 75, // Height of the rhombus (it’s a square rotated 45 degrees)
-//         backgroundColor: 'blue', // Background color
-//         transform: [{ rotate: '45deg' }], // Rotates the square by 45 degrees
-//         alignSelf: 'center',
-//         justifyContent: 'center',
-//         alignItems: 'center',
-//         overflow: 'hidden'
-//     },
-//     rhombusImage: {
-//         position: 'static',
-//         resizeMode: 'cover',
-//         width: 105,
-//         height: 105,
-//         resizeMode: 'cover',
-//         transform: [{ rotate: '-45deg' }],
-
-//     },
-//     container: {
-//         flex: 1,
-//         justifyContent: 'center',
-//         alignItems: 'center',
-//         backgroundColor: 'white'
-//     },
-//     maskContainer: {
-//         flexDirection: 'row',
-//         width: '100%',
-//         backgroundColor: 'white',
-//         height: 105
-//     },
-//     gridContainer: {
-//         flexDirection: 'row',
-//         width: '100%',
-//         backgroundColor: 'white',
-//         height: 105,
-//         // marginTop:-8
-//     },
-//     rhombusView: {
-//         width: 75, // Width of the rhombus
-//         height: 75, // Height of the rhombus (it’s a square rotated 45 degrees)
-//         backgroundColor: 'blue', // Background color
-//         transform: [{ rotate: '45deg' }], // Rotates the square by 45 degrees
-//         alignSelf: 'center',
-//         marginLeft: 34,
-//         justifyContent: 'center',
-//         alignItems: 'center',
-//         overflow: 'hidden'
-//     },
-//     gridView: {
-//         width: 75, // Width of the rhombus
-//         height: 75, // Height of the rhombus (it’s a square rotated 45 degrees)
-//         backgroundColor: 'blue', // Background color
-//         transform: [{ rotate: '45deg' }], // Rotates the square by 45 degrees
-//         alignSelf: 'center',
-//         justifyContent: 'center',
-//         alignItems: 'center',
-//         overflow: 'hidden'
-//     },
-//     rhombusImage: {
-//         position: 'static',
-//         resizeMode: 'cover',
-//         width: 105,
-//         height: 105,
-//         resizeMode: 'cover',
-//         transform: [{ rotate: '-45deg' }],
-
-//     }
-// });
-
-
-
-
 const styles = StyleSheet.create({
     safeAreaViewContainer: {
-        flex: 1
+        flex: 1,
+        backgroundColor:'white'
     },
     container: {
         flex: 1,
@@ -404,10 +294,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     flatListContainer: {
-        height: '100%',
+        height: 600,
         backgroundColor: 'white',
         marginTop: 40,
-
+        paddingBottom:30
     },
     imageView: {
         height: 148,
@@ -415,7 +305,7 @@ const styles = StyleSheet.create({
         marginTop: 12
     },
     inspireText: {
-        marginTop: 32,
+        marginTop: 42,
         marginLeft: 44,
         marginRight: 44,
         marginBottom: 41,
@@ -423,7 +313,7 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     pagerView: {
-        flex: 1,
+        height: 650,
         width: '100%',
         backgroundColor: 'red'
     },
@@ -455,7 +345,7 @@ const styles = StyleSheet.create({
     rhombusView: {
         width: 75, // Width of the rhombus
         height: 75, // Height of the rhombus (it’s a square rotated 45 degrees)
-        backgroundColor: 'blue', // Background color
+        backgroundColor: 'white', // Background color
         transform: [{ rotate: '45deg' }], // Rotates the square by 45 degrees
         alignSelf: 'center',
         marginLeft: 34,
@@ -466,7 +356,7 @@ const styles = StyleSheet.create({
     gridView: {
         width: 75, // Width of the rhombus
         height: 75, // Height of the rhombus (it’s a square rotated 45 degrees)
-        backgroundColor: 'blue', // Background color
+        backgroundColor: 'white', // Background color
         transform: [{ rotate: '45deg' }], // Rotates the square by 45 degrees
         alignSelf: 'center',
         justifyContent: 'center',
@@ -484,7 +374,8 @@ const styles = StyleSheet.create({
     },
     dotViewContainer: {
         alignSelf: 'center',
-        // top:0,
+        marginTop:104,
+        marginBottom:74,
         height: 24,
         flexDirection: 'row'
     },
