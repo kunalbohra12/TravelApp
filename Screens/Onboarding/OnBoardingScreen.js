@@ -23,15 +23,16 @@ const OnBoardingScreen = ({ navigation }) => {
                         <TouchableOpacity
                             style={styles.getStartedButton}
                             onPress={() => navigation.navigate('Destination')} // Navigate to LoginScreen on press
-                        >
-                            <Text style={{color:'white'}}>Get Started</Text>
+                        ><Text style={{ color: 'white' }}>Get Started</Text>
                         </TouchableOpacity>
                         <View style={styles.loginDescrptnView}>
-                            <Text style={{color:'white'}}>Already have an account ? Log in</Text>
+                            <Text style={{ color: 'white' }}>Already have an account?</Text>
+                            <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate('Login')}>
+                                <Text style={{ color: 'white' }}>Log in</Text>
+                            </TouchableOpacity>
                         </View>
+
                     </View>
-
-
                 </ImageBackground>
                 {/* Other UI components can go here */}
             </View>
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginTop: 6
     },
-    buttonContainerView:{
+    buttonContainerView: {
         flexDirection: 'column',
         justifyContent: 'center',
         height: 95,
@@ -85,22 +86,26 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         alignSelf: 'center',
         bottom: 69, // Adjust this value to set some padding from the bottom
-        borderRadius:16
+        borderRadius: 16
     },
-     getStartedButton:{
-        height:48,
-        backgroundColor:'#167351',
-        borderRadius:8,
-        flex:1,
+    getStartedButton: {
+        height: 48,
+        backgroundColor: '#167351',
+        borderRadius: 8,
+        flex: 1,
         width: 327,
-         justifyContent:'center',
-         alignItems:'center'
-     },
-     loginDescrptnView:{
-        height:20,
-        marginTop:20
-     }
-    
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    loginDescrptnView: {
+        height: 20,
+        marginTop: 20,
+        flexDirection:'row'
+    },
+    loginButton: {
+        marginLeft: 5,
+    },
+
 });
 
 export default OnBoardingScreen;

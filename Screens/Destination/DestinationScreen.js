@@ -1,6 +1,6 @@
 import React from 'react';
-import { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, FlatList, Platform, ScrollView, Image, Alert, ImageBackground, Animated } from 'react-native';
+import { useState, useRef } from 'react';
+import { View, Text, Button, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, FlatList, Platform, ScrollView, Image, Alert, ImageBackground, Animated } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import axios from 'axios';
 import ForgotIcon from '../../assets/Forgot.png';
@@ -19,6 +19,7 @@ import { images } from '../../HelperFiles/Images/Images';
 const DestinationScreen = ({ navigation }) => {
     const scrollX = React.useRef(new Animated.Value(0)).current;
     const [currentPage, setCurrentPage] = useState(0); // State to track the current page
+    const pagerRef = useRef(null); // Reference to PagerView
 
     // Initialize the form
     const imageData = [
@@ -36,6 +37,18 @@ const DestinationScreen = ({ navigation }) => {
         { id: '3', color: 'lightcoral', text: 'Page 3' },
     ];
 
+    // Function to go to the next page
+    const handleNextPage = () => {
+        if (pagerRef.current) {
+            const nextPage = currentPage + 1;
+            if (nextPage < pages.length) {
+                pagerRef.current.setPage(nextPage);
+                setCurrentPage(nextPage);  // Update state to reflect the new page
+            }
+        }
+    };
+
+
     const renderImageList = ({ item }) => (
         <View style={styles.imageView}>
             <Image style={styles.image}
@@ -51,163 +64,165 @@ const DestinationScreen = ({ navigation }) => {
     return (
 
         <View style={styles.safeAreaViewContainer}>
-              <ScrollView contentContainerStyle={{ flexGrow: 1}}>
-              <View style={styles.container}>
-                <PagerView
-                    style={styles.pagerView}
-                    initialPage={0}
-                    onPageScroll={onPageSelected} // Attach the event handler
-                >
-                    {/* {pages.map(page => ( */}
-                    <View key="0" style={[styles.page, { backgroundColor: 'white' }]}>
-                        <Text style={styles.appTitle}>Get inspiration for your next trip</Text>
-                        <FlatList
-                            data={imageData}
-                            renderItem={renderImageList}
-                            horizontal={true}
-                            showsHorizontalScrollIndicator={true}
-                            contentContainerStyle={styles.flatListContainer}
-                        />
-                        <Text style={styles.inspireText}>We’re happy to share our best tips for destinations where you can relax. But you find the nicest city trips as well!</Text>
-                    </View>
-                    <View key="1" style={[styles.page, { backgroundColor: 'white' }]}>
-                        <Text style={styles.appTitle}>Find best place for your journey</Text>
-                        <View style={styles.maskContainer}>
-                            <View style={styles.rhombusView}>
-                                <Image
-                                    source={DestinationImage}
-                                    style={styles.rhombusImage}
-                                />
-                            </View>
-                            <View style={styles.rhombusView}>
-                                <Image
-                                    source={DestinationImage}
-                                    style={styles.rhombusImage}
-                                />
-                            </View>
-                            <View style={styles.rhombusView}>
-                                <Image
-                                    source={DestinationImage}
-                                    style={styles.rhombusImage}
-                                />
-                            </View>
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+                <View style={styles.container}>
+                    <PagerView
+                        style={styles.pagerView}
+                        initialPage={0}
+                        ref={pagerRef}
+                        onPageScroll={onPageSelected} // Attach the event handler
+                    >
+                        {/* {pages.map(page => ( */}
+                        <View key="0" style={[styles.page, { backgroundColor: 'white' }]}>
+                            <Text style={styles.appTitle}>Get inspiration for your next trip</Text>
+                            <FlatList
+                                data={imageData}
+                                renderItem={renderImageList}
+                                horizontal={true}
+                                showsHorizontalScrollIndicator={true}
+                                contentContainerStyle={styles.flatListContainer}
+                            />
+                            <Text style={styles.inspireText}>We’re happy to share our best tips for destinations where you can relax. But you find the nicest city trips as well!</Text>
                         </View>
-                        <View style={styles.gridContainer}>
-                            <View style={[styles.gridView, { marginLeft: -22, marginTop: -82 }]}>
-                                <Image
-                                    source={images.BridgeIcon}
-                                    style={styles.rhombusImage}
-                                />
-                            </View>
-                            <View style={[styles.gridView, { marginLeft: 35, marginTop: -72 }]}>
-                                <Image
-                                    source={images.DestinationIcon}
-                                    style={styles.rhombusImage}
-                                />
-                            </View>
-                            <View style={[styles.gridView, { marginLeft: 35, marginTop: -72 }]}>
-                                <Image
-                                    source={images.DestinationIcon}
-                                    style={styles.rhombusImage}
-                                />
-                            </View>
-                            <View style={[styles.gridView, { marginLeft: 35, marginTop: -72 }]}>
-                                <Image
-                                    source={images.DestinationIcon}
-                                    style={styles.rhombusImage}
-                                />
-                            </View>
-                        </View>
-                        <Text style={[styles.inspireText, { textAlign: 'center', marginLeft: 44, marginRight: 44 }]}>We’re happy to share our best tips for destinations where you can relax. But you find the nicest city trips as well!</Text>
-                    </View>
-                    <View key="2" style={[styles.page, { backgroundColor: 'white' }]}>
-                            <TouchableOpacity style={styles.backNavigationBtn}
-                             onPress={navigation.} // Attach onPress event handler
-
-                            >
-                                <Image
-                                    source={images.LeftNavigationIcon}
-                                />
-                            </TouchableOpacity>
-                            <Text style={styles.dealsTitle}>Find best deals</Text>
-                            <View style={styles.dealsImageView}>
-                                <ImageBackground
-                                    source={images.RomeIcon}
-                                    style={styles.dealsImages}>
-                                    <Text style={styles.placeText}>Rome</Text>
-                                </ImageBackground>
-                                <View style={styles.dealsPriceView}>
-                                    <Text style={styles.priceTxt}>326$</Text>
+                        <View key="1" style={[styles.page, { backgroundColor: 'white' }]}>
+                            <Text style={styles.appTitle}>Find best place for your journey</Text>
+                            <View style={styles.maskContainer}>
+                                <View style={styles.rhombusView}>
+                                    <Image
+                                        source={DestinationImage}
+                                        style={styles.rhombusImage}
+                                    />
+                                </View>
+                                <View style={styles.rhombusView}>
+                                    <Image
+                                        source={DestinationImage}
+                                        style={styles.rhombusImage}
+                                    />
+                                </View>
+                                <View style={styles.rhombusView}>
+                                    <Image
+                                        source={DestinationImage}
+                                        style={styles.rhombusImage}
+                                    />
                                 </View>
                             </View>
-                            <View style={styles.stackView}>
-                                <View style={styles.imageStackView}>
-                                    <ImageBackground
-                                        source={images.ParisIcon}
-                                        style={styles.dealsImages}
-                                    >
-                                        <Text style={{ fontSize: 24, fontWeight: 'bold', color: 'white' }}>Paris</Text>
-                                    </ImageBackground>
-                                    <View style={[styles.dealsPriceView, { width: '45%' }]}>
-                                        <Text style={{ fontWeight: 'medium', fontSize: 16, color: '#151515' }}>326$</Text>
-
-                                    </View>
+                            <View style={styles.gridContainer}>
+                                <View style={[styles.gridView, { marginLeft: -22, marginTop: -82 }]}>
+                                    <Image
+                                        source={images.BridgeIcon}
+                                        style={styles.rhombusImage}
+                                    />
                                 </View>
-                                <View style={[styles.imageStackView, { marginLeft: 12 }]}>
+                                <View style={[styles.gridView, { marginLeft: 35, marginTop: -72 }]}>
+                                    <Image
+                                        source={images.DestinationIcon}
+                                        style={styles.rhombusImage}
+                                    />
+                                </View>
+                                <View style={[styles.gridView, { marginLeft: 35, marginTop: -72 }]}>
+                                    <Image
+                                        source={images.DestinationIcon}
+                                        style={styles.rhombusImage}
+                                    />
+                                </View>
+                                <View style={[styles.gridView, { marginLeft: 35, marginTop: -72 }]}>
+                                    <Image
+                                        source={images.DestinationIcon}
+                                        style={styles.rhombusImage}
+                                    />
+                                </View>
+                            </View>
+                            <Text style={[styles.inspireText, { textAlign: 'center', marginLeft: 44, marginRight: 44 }]}>We’re happy to share our best tips for destinations where you can relax. But you find the nicest city trips as well!</Text>
+                        </View>
+                        <View key="2" style={[styles.page, { backgroundColor: 'white' }]}>
+                                <TouchableOpacity style={styles.backNavigationBtn}
+                                    onPress={() => navigation.goBack()}
+                                >
+                                    <Image
+                                        source={images.LeftNavigationIcon}
+                                    />
+                                </TouchableOpacity>
+                                <Text style={styles.dealsTitle}>Find best deals</Text>
+                                <View style={styles.dealsImageView}>
                                     <ImageBackground
-                                        source={images.NewYorkIcon}
-                                        style={styles.dealsImages}
-                                    >
-                                        <Text style={styles.placeText}>New York</Text>
+                                        source={images.RomeIcon}
+                                        style={styles.dealsImages}>
+                                        <Text style={styles.placeText}>Rome</Text>
                                     </ImageBackground>
-                                    <View style={[styles.dealsPriceView, { width: '45%' }]}>
+                                    <View style={styles.dealsPriceView}>
                                         <Text style={styles.priceTxt}>326$</Text>
                                     </View>
                                 </View>
-                            </View>
-                            <View style={styles.dealsImageView}>
-                                <ImageBackground
-                                    source={images.LondonIcon}
-                                    style={styles.dealsImages}
-                                >
-                                    <Text style={styles.placeText}>London</Text>
-                                </ImageBackground>
-                                <View style={styles.dealsPriceView}>
-                                    <Text style={styles.priceTxt}>326$</Text>
+                                <View style={styles.stackView}>
+                                    <View style={styles.imageStackView}>
+                                        <ImageBackground
+                                            source={images.ParisIcon}
+                                            style={styles.dealsImages}
+                                        >
+                                            <Text style={{ fontSize: 24, fontWeight: 'bold', color: 'white' }}>Paris</Text>
+                                        </ImageBackground>
+                                        <View style={[styles.dealsPriceView, { width: '45%' }]}>
+                                            <Text style={{ fontWeight: 'medium', fontSize: 16, color: '#151515' }}>326$</Text>
 
+                                        </View>
+                                    </View>
+                                    <View style={[styles.imageStackView, { marginLeft: 12 }]}>
+                                        <ImageBackground
+                                            source={images.NewYorkIcon}
+                                            style={styles.dealsImages}
+                                        >
+                                            <Text style={styles.placeText}>New York</Text>
+                                        </ImageBackground>
+                                        <View style={[styles.dealsPriceView, { width: '45%' }]}>
+                                            <Text style={styles.priceTxt}>326$</Text>
+                                        </View>
+                                    </View>
                                 </View>
-                            </View>
-                            <TouchableOpacity style={styles.getStartedBtn}>
-                                <Text style={{ color: 'white', fontWeight: 'medium', fontSize: 16 }}>Get Started</Text>
-                            </TouchableOpacity>
-                    </View>
-                    {/* ))} */}
-                </PagerView>
-                <View style={styles.dotViewContainer}>
-                        <Dots
-                            length={3} // Total number of pages
-                            active={currentPage}   // Current active page index
-                            activeDotWidth={10}    // Width of the active dot
-                            passiveDotWidth={10}    // Width of the inactive dot
-                            activeColor={'#167351'} // Color of the active dot
-                            passiveColor={'gray'} // Color of the inactive dot
-                            marginHorizontal={5}   // Space between dots
-                        />
-                        <TouchableOpacity style={styles.scrollBtn}>
-                            <Image
-                                source={NavigateIcon}
+                                <View style={styles.dealsImageView}>
+                                    <ImageBackground
+                                        source={images.LondonIcon}
+                                        style={styles.dealsImages}
+                                    >
+                                        <Text style={styles.placeText}>London</Text>
+                                    </ImageBackground>
+                                    <View style={styles.dealsPriceView}>
+                                        <Text style={styles.priceTxt}>326$</Text>
+
+                                    </View>
+                                </View>
+                                <View style={{marginTop:20,height:50,backgroundColor:'#167351',width:'90%',marginHorizontal: 20,borderRadius:16}}>
+                                <TouchableOpacity style={{ marginTop: 30,backgroundColor: '#167351',bottom: 15, width: '90%', marginHorizontal: 20 }}
+                                        onPress={() => navigation.navigate('Connect')}>
+                                    <Text style={{textAlign:'center',color:'#FFFFFF'}} >Get Started</Text>
+                                </TouchableOpacity>
+                                </View>
+                        </View>
+                        {/* ))} */}
+                    </PagerView>
+                    {currentPage !== 2 && (
+                        <View style={styles.dotViewContainer}>
+                            <Dots
+                                length={3} // Total number of pages
+                                active={currentPage}   // Current active page index
+                                activeDotWidth={10}    // Width of the active dot
+                                passiveDotWidth={10}    // Width of the inactive dot
+                                activeColor={'#167351'} // Color of the active dot
+                                passiveColor={'gray'} // Color of the inactive dot
+                                marginHorizontal={5}   // Space between dots
                             />
-                        </TouchableOpacity>
-                    </View>
-            </View>
+                            <TouchableOpacity style={styles.scrollBtn}
+                                onPress={handleNextPage}>
+                                <Image
+                                    source={NavigateIcon}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    )}
+                </View>
             </ScrollView>
         </View>
 
-
-
     );
-
-
 
     // return (
     //     <View style={styles.container}>
@@ -264,7 +279,7 @@ const DestinationScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     safeAreaViewContainer: {
         flex: 1,
-        backgroundColor:'white'
+        backgroundColor: 'white'
     },
     container: {
         flex: 1,
@@ -297,7 +312,7 @@ const styles = StyleSheet.create({
         height: 600,
         backgroundColor: 'white',
         marginTop: 40,
-        paddingBottom:30
+        paddingBottom: 30
     },
     imageView: {
         height: 148,
@@ -313,7 +328,7 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     pagerView: {
-        height: 650,
+        height: 700,
         width: '100%',
         backgroundColor: 'red'
     },
@@ -373,18 +388,18 @@ const styles = StyleSheet.create({
 
     },
     dotViewContainer: {
-        alignSelf: 'center',
-        marginTop:104,
-        marginBottom:74,
         height: 24,
-        flexDirection: 'row'
+        flexDirection: 'row',    // Align dots and button in a row
+        justifyContent: 'space-between', // Center the dots and button
+        alignItems: 'center',     // Align items vertically
+        alignSelf: 'flex-end',
+        marginBottom: 60,
+        marginRight: 27,
+        width: 194,
     },
     scrollBtn: {
-        height: 17,
-        width: 17,
-        marginRight: 27,
-        alignSelf: 'flex-end',
-        // bottom: 74,
+        marginLeft: 20,           // Add space between the dots and the button
+        padding: 10,
     },
     backNavigationBtn: {
         height: 24,
@@ -407,7 +422,6 @@ const styles = StyleSheet.create({
         marginHorizontal: 16,
         justifyContent: 'center',
         height: 157,
-        marginBottom: 20
     },
     dealsImages: {
         width: '100%',
@@ -459,15 +473,15 @@ const styles = StyleSheet.create({
         overflow: 'hidden'
     },
     getStartedBtn: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        alignSelf: 'center',
-        width: '85%',
-        marginTop: 50,
-        height: 50,
-        backgroundColor: '#167351',
-        marginBottom: 20,
-        borderRadius: 16
+        backgroundColor: 'blue',  // Button background color
+        height: 50,               // Button height
+        borderRadius: 10,         // Rounded corners
+        alignItems: 'center',     // Center text horizontally
+        justifyContent: 'center', // Center text vertically
+        marginTop: 30,            // Add spacing from elements above
+        marginBottom: 30,         // Add spacing from elements below
+        width: '90%',             // Make button take 90% of the screen width
+        alignSelf: 'center',      // Center the button within the screen
     }
 
 });

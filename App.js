@@ -12,50 +12,52 @@ import TouchIdScreen from './Screens/TouchID/TouchIDScreen';
 import HomeScreen from './Screens/Home/HomeScreen';
 import DestinationScreen from './Screens/Destination/DestinationScreen';
 import BottomTabBarScreen from './TabBar/BottomTabBar';
+import Navigator from './HelperFiles/AppNavigator/Navigation';
 import { LogBox } from 'react-native';
 LogBox.ignoreAllLogs(); // Ignores all warning messages
 
-const Stack = createStackNavigator();
 
 const App = () => {
-  return (
-    <NavigationContainer>
-      <StatusBar backgroundColor='black' />
+  // return (
+    return <Navigator />;
 
-      <Stack.Navigator initialRouteName="OnBoarding">
+    // <NavigationContainer>
+    //   <StatusBar backgroundColor='black' />
 
-        <Stack.Screen name="OnBoarding" component={OnBoardingScreen}
-          options={{ headerShown: false }}///ConnectionScrreen
-        />
-          <Stack.Screen name="Destination" component={DestinationScreen}
-          options={{ headerShown: false }}///ConnectionScrreen
-        />
-         <Stack.Screen
-          name="TabBar"
-          component={BottomTabBarScreen}
-          options={{ headerShown: false }}
-        />
-        {/* <Stack.Screen name="Connect" component={ConnectionScreen}
-          options={{ headerShown: false }}///ConnectionScrreen
-        />
-        <Stack.Screen name="Login" component={LoginScreen}
-          options={{ headerShown: false }}///ConnectionScrreen
-        />
-        <Stack.Screen name="SignUp" component={SignUpScreen}
-          options={{ headerShown: false }}///ConnectionScrreen
-        />
-        <Stack.Screen name="Forgot" component={ForgotPasswordScreen}
-          options={{ headerShown: false }}///ConnectionScrreen
-        />
-        <Stack.Screen name="TouchId" component={TouchIdScreen}
-          options={{ headerShown: false }}///ConnectionScrreen
-        /> */}
-        <Stack.Screen name="Home" component={HomeScreen}
-          options={{ headerShown: false }}///ConnectionScrreen
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+    //   <Stack.Navigator initialRouteName="OnBoarding">
+
+    //     <Stack.Screen name="OnBoarding" component={OnBoardingScreen}
+    //       options={{ headerShown: false }}///ConnectionScrreen
+    //     />
+    //       <Stack.Screen name="Destination" component={DestinationScreen}
+    //       options={{ headerShown: false }}///ConnectionScrreen
+    //     />
+    //      <Stack.Screen
+    //       name="TabBar"
+    //       component={BottomTabBarScreen}
+    //       options={{ headerShown: false }}
+    //     />
+    //     {/* <Stack.Screen name="Connect" component={ConnectionScreen}
+    //       options={{ headerShown: false }}///ConnectionScrreen
+    //     />
+    //     <Stack.Screen name="Login" component={LoginScreen}
+    //       options={{ headerShown: false }}///ConnectionScrreen
+    //     />
+    //     <Stack.Screen name="SignUp" component={SignUpScreen}
+    //       options={{ headerShown: false }}///ConnectionScrreen
+    //     />
+    //     <Stack.Screen name="Forgot" component={ForgotPasswordScreen}
+    //       options={{ headerShown: false }}///ConnectionScrreen
+    //     />
+    //     <Stack.Screen name="TouchId" component={TouchIdScreen}
+    //       options={{ headerShown: false }}///ConnectionScrreen
+    //     /> */}
+    //     <Stack.Screen name="Home" component={HomeScreen}
+    //       options={{ headerShown: false }}///ConnectionScrreen
+    //     />
+    //   </Stack.Navigator>
+    // </NavigationContainer>
+  
 };
 
 export default App;

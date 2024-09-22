@@ -167,7 +167,7 @@ const SignUpScren = ({ navigation }) => {
           <View style={styles.signUpContainer}>
             <Text style>Already have an account?</Text>
             <TouchableOpacity style={{color:'black'}}
-             onPress={('Login')}>
+             onPress={() => (navigation.navigate('Login'))}>
             <Text style={{ color: 'black',marginStart:5}}>Login</Text>
           </TouchableOpacity>
           </View>
