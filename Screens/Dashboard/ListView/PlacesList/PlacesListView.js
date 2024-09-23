@@ -1,16 +1,9 @@
 import React from 'react';
 import { View, FlatList, Text, ImageBackground, StyleSheet } from 'react-native';
-import { images } from '../../../HelperFiles/Images/Images';
 
-const CustomListView = ({ productData }) => {
-    const data = [
-        { id: '1', destinationImages: images.ThailandIcon },
-        { id: '2', destinationImages: images.ThailandIcon },
-
-
-    ];
-    console.log('Product Data is :', productData)
-    console.log('Product name is :', productData.name)
+const PlacesListView = ({ productData }) => {
+   
+    console.log('Category Data is :', productData)
 
     const renderItem = ({ item }) => (
         <View key={item.id} style={styles.itemContainer}>
@@ -19,10 +12,10 @@ const CustomListView = ({ productData }) => {
             style={styles.imageBackground}
             imageStyle={styles.imageStyle}
           >
-            <View style={styles.textContainer}>
+          </ImageBackground>
+          <View style={styles.textContainer}>
               <Text style={styles.text}>{item.name}</Text>
             </View>
-          </ImageBackground>
         </View>
       );
       
@@ -92,4 +85,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default CustomListView;
+export default PlacesListView;

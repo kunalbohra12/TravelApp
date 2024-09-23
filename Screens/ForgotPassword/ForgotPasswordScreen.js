@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, KeyboardAvoidingView, Platform, ScrollView,Image, Alert } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import axios from 'axios';
@@ -12,6 +12,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
     },
     mode: 'onChange',
   });
+  const [showLoader, setShowLoader] = useState(false);
 
   // Handle form submission
   const handleForgotPasswdManager = async (data) => {
@@ -87,6 +88,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
           <TouchableOpacity style={styles.logInBtnView} onPress={(handleSubmit(handleForgotPasswdManager))}>
             <Text style={{ color: 'white' }}>send Password</Text>
           </TouchableOpacity>
+          {showLoader && <Loader size="large" color="blue" />}
             <Text style={{ color: 'black',marginStart:5,marginTop:90}}>I remember the password</Text>
           </View>
         </ScrollView>

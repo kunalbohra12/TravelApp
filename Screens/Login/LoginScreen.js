@@ -1,11 +1,12 @@
-import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, KeyboardAvoidingView, Platform, ScrollView,Image } from 'react-native';
+import React,{useState} from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, KeyboardAvoidingView, Platform, ScrollView, Image } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import axios from 'axios';
 import { images } from '../../HelperFiles/Images/Images';
 import FacebookIcon from '../../assets/Facebook.png';
 import TwitterIcon from '../../assets/Twitter.png';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Loader from '../../HelperFiles/Loader/CustomLoader';
 const LoginScreen = ({ navigation }) => {
   // Initialize the form
   const { control, handleSubmit, formState: { errors } } = useForm({
@@ -15,12 +16,15 @@ const LoginScreen = ({ navigation }) => {
     },
     mode: 'onChange',
   });
+  const [showLoader, setShowLoader] = useState(false);
 
   // Handle form submission
   const handleLoginManager = async (data) => {
+    setShowLoader(true);
+   
     try {
       console.log('Form data:', data);
-      
+
       // API endpoint
       const response = await axios.post(
         'http://3.144.131.203/ecommerce-web/public/api/login',
@@ -29,19 +33,26 @@ const LoginScreen = ({ navigation }) => {
           password: data.password,
         },
       );
-      
-      if (response.data.success) {
-        const userData = response.data; // Assume these fields are in the response
-        // Navigate to HomeScreen after successful login
-        navigation.navigate('Destination');
-        console.log('push to Destination');
 
+      if (response.data.success) {
+        const userData = response.data.data; // Assume these fields are in the response
+        const token = userData.name
+        // Navigate to HomeScreen after successful login
+        console.log('name:', token);
+        // Stringify the userData before saving it to AsyncStorage
+        await AsyncStorage.setItem('userToken', JSON.stringify(userData));
+        navigation.navigate('TabBar');
       } else {
         console.log('Error', response.message);
       }
     } catch (error) {
       console.error('Error sending data:', error.response ? error.response.data : error.message);
     }
+    finally {
+      // Hide loader after the login process finishes, either success or failure
+      setShowLoader(false);
+    }
+
   };
 
   return (
@@ -53,7 +64,6 @@ const LoginScreen = ({ navigation }) => {
       >
         <ScrollView contentContainerStyle={styles.contentContainer}>
           <Text style={styles.appTitle}>Log in</Text>
-
           <View style={styles.segmentView}>
             <TouchableOpacity style={styles.fbLoginBtnView} onPress={() => navigation.navigate('Login')}>
               <Image source={images.FacebookIcon} style={{ marginLeft: 20 }} />
@@ -64,9 +74,7 @@ const LoginScreen = ({ navigation }) => {
               <Text style={styles.buttonText}>Twitter</Text>
             </TouchableOpacity>
           </View>
-
           <Text style={{ color: 'black', alignSelf: 'center', marginTop: 32, fontSize: 14 }}>or log in with email</Text>
-
           <View style={styles.inputContainer}>
             <View style={styles.emailInputContainer}>
               <Controller
@@ -126,12 +134,14 @@ const LoginScreen = ({ navigation }) => {
           <TouchableOpacity style={styles.logInBtnView} onPress={handleSubmit(handleLoginManager)}>
             <Text style={{ color: 'white' }}>Log In</Text>
           </TouchableOpacity>
-
+          {showLoader && <Loader size="large" color="blue" />}
           <View style={styles.signUpContainer}>
             <Text style={{ color: 'black', alignSelf: 'center' }}>Don't Have an account?</Text>
             <TouchableOpacity style={styles.signUpBtn} onPress={() => navigation.navigate('SignUp')}>
               <Text style={{ color: 'black' }}>Sign Up</Text>
             </TouchableOpacity>
+            {/* {showLoader && <Loader size="large" color="blue" />} */}
+
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -144,7 +154,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
-  
+
   contentContainer: {
     paddingHorizontal: 24,
     paddingBottom: 32,
@@ -225,8 +235,8 @@ const styles = StyleSheet.create({
   },
   error: {
     color: 'red',
-    textAlign:'left',
-    marginLeft:10
+    textAlign: 'left',
+    marginLeft: 10
   },
 });
 

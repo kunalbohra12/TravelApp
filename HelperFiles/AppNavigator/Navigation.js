@@ -11,7 +11,8 @@ import ForgotPasswordScreen from '../../Screens/ForgotPassword/ForgotPasswordScr
 import HomeScreen from '../../Screens/Home/HomeScreen';
 import DestinationScreen from '../../Screens/Destination/DestinationScreen';
 import BottomTabBarScreen from '../../TabBar/BottomTabBar';
-
+import SplashScreen from '../../Screens/Splash/SplashScreen';
+import TripScreen from '../../Screens/Dashboard/Trips/TripsScreen';
 const Stack = createStackNavigator();
 
 
@@ -21,8 +22,11 @@ const Navigator = () => {
       
       <StatusBar backgroundColor='black' />
 
-      <Stack.Navigator initialRouteName="OnBoarding">
-
+      <Stack.Navigator initialRouteName="Splash">
+       
+      <Stack.Screen name="Splash" component={SplashScreen}
+          options={{ headerShown: false }}///ConnectionScrreen
+        />
         <Stack.Screen name="OnBoarding" component={OnBoardingScreen}
           options={{ headerShown: false }}///ConnectionScrreen
         />
@@ -49,6 +53,7 @@ const Navigator = () => {
         <Stack.Screen name="Home" component={HomeScreen}
           options={{ headerShown: false }}///ConnectionScrreen
         />
+        
       </Stack.Navigator>
     </NavigationContainer>
     );

@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, KeyboardAvoidingView, Platform, ScrollView,Image } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import axios from 'axios';
@@ -12,33 +12,38 @@ const SignUpScren = ({ navigation }) => {
        username:'',
       email: '',
       password: '',
-      confirmPassword:''
+      mobileNo:''
     },
     mode: 'onChange',
   });
+  const [showLoader, setShowLoader] = useState(false);
 
   // Handle form submission
-  const handleLoginManager = async (data) => {
+  const handleSignUp = async (data) => {
     try {
       console.log('Form data:', data);
-      
+
       // API endpoint
       const response = await axios.post(
-        'http://3.144.131.203/ecommerce-web/public/api/login',
+        'http://3.144.131.203/ecommerce-web/public/api/signup',
         {
-          username: data.username,
           email: data.email,
           password: data.password,
 
         },
-        // {
-        //   headers: {
-        //     'Content-Type': 'application/json',
-        //   },
-        // }
       );
-      
-      console.log('Response Data:', response.data);
+
+      if (response.data.success) {
+        const userData = response.data.data; // Assume these fields are in the response
+        const token = userData.name
+        // Navigate to HomeScreen after successful login
+        console.log('name:', token);
+        // Stringify the userData before saving it to AsyncStorage
+        await AsyncStorage.setItem('userToken', JSON.stringify(userData));
+        navigation.navigate('TabBar');
+      } else {
+        console.log('Error', response.message);
+      }
     } catch (error) {
       console.error('Error sending data:', error.response ? error.response.data : error.message);
     }
@@ -136,22 +141,23 @@ const SignUpScren = ({ navigation }) => {
               />
             </View>
             {errors.password && <Text style={styles.error}>{errors.password.message}</Text>}
-            <View style={styles.confirmPasswdInputContainer}>
+            <View style={styles.mobileNoInputContainer}>
               <Controller
                 control={control}
-                name="confirmPassword"
+                name="MobileNo"
                 rules={{
-                  required: 'Confirm Password is required',
+                  required: 'Mobile Number is required',
                   minLength: {
-                    value: 6,
-                    message: 'Password must be at least 6 characters',
+                    value: 10,
+                    message: 'MobileNo must be at least 10 Number',
                   },
                 }}
                 render={({ field: { onChange, value } }) => (
                   <TextInput
                     style={styles.input}
-                    placeholder='Confirm Password'
+                    placeholder='Mobile Number'
                     placeholderTextColor={'#000000'}
+                    keyboardType='phone-pad'
                     value={value}
                     secureTextEntry
                     onChangeText={onChange}
@@ -159,11 +165,12 @@ const SignUpScren = ({ navigation }) => {
                 )}
               />
             </View>
-            {errors.confirmPassword && <Text style={styles.error}>{errors.confirmPassword.message}</Text>}
+            {errors.mobileNo && <Text style={styles.error}>{errors.mobileNo.message}</Text>}
           </View>
           <TouchableOpacity style={styles.logInBtnView} onPress={console.log('Sign Up API not Setup')}>
             <Text style={{ color: 'white' }}>Sign Up</Text>
           </TouchableOpacity>
+          {showLoader && <Loader size="large" color="blue" />}
           <View style={styles.signUpContainer}>
             <Text style>Already have an account?</Text>
             <TouchableOpacity style={{color:'black'}}
@@ -246,7 +253,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 15,
   },
-  confirmPasswdInputContainer: {
+  mobileNoInputContainer: {
     height: 48,
     borderWidth: 2,
     borderRadius: 16,
@@ -268,7 +275,8 @@ const styles = StyleSheet.create({
   },
   signUpContainer: {
     flexDirection:'row',
-    marginTop: 80,
+    marginTop: 30,
+    // marginBottom:50,
     alignItems: 'center',
     width: '70%',
     alignSelf:'center',

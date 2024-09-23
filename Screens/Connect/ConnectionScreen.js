@@ -10,7 +10,6 @@ const ConnectionScreen = ({ navigation }) => {
 
     return (
         <SafeAreaView style={styles.container}>
-
             <View style={styles.contentContainer}>
                 <Text style={styles.appTitle}>Plan your trips</Text>
                 <Text style={styles.appDescrptn}>Connect with other travellers</Text>
@@ -18,12 +17,11 @@ const ConnectionScreen = ({ navigation }) => {
                     source={images.tripIcon}
                     style={[
                         styles.appIcon,
-                      ]}
-                              />
+                      ]}/>
                 <View style={styles.connectionOptnsView}>
                     <TouchableOpacity
                         style={styles.logInBtnView}
-                        onPress={() => navigation.navigate('Login')} // Navigate to LoginScreen on press
+                        onPress={() => navigation.navigate('Login')}
                     >
                     <Text style={styles.loginButtonText}>Log In</Text>
                     </TouchableOpacity>

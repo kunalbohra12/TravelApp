@@ -8,6 +8,7 @@ import HomeScreen from '../Screens/Destination/DestinationScreen';
 import ForgotPasswordScreen from '../Screens/ForgotPassword/ForgotPasswordScreen';
 import ConnectionScreen from '../Screens/Connect/ConnectionScreen';
 import ExploreScreen from '../Screens/Dashboard/Explore/ExploreScreen';
+import TripScreen from '../Screens/Dashboard/Trips/TripsScreen';
 // Import custom icon
 import { images } from '../HelperFiles/Images/Images';
 import ExploreIcon from '../assets/Explore.png';
@@ -15,6 +16,7 @@ import TripIcon from '../assets/Trips.png';
 import SavedIcon from '../assets/Saved.png';
 import InboxIcon from '../assets/Inbox.png';
 import ProfileIcon from '../assets/Profile.png';
+
 const Tab = createBottomTabNavigator();
 
 
@@ -84,7 +86,7 @@ const BottomTabBarScreen = () => {
       <Tab.Screen name="Explore" component={ExploreScreen}
         options={{ headerShown: false }}
       />
-      <Tab.Screen name="Trips" component={HomeScreen}
+      <Tab.Screen name="Trips" component={TripScreen}
         options={{ headerShown: false }}
       />
       <Tab.Screen name="Saved" component={DashboardScreen}
