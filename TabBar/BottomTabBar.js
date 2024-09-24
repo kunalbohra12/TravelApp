@@ -16,6 +16,7 @@ import TripIcon from '../assets/Trips.png';
 import SavedIcon from '../assets/Saved.png';
 import InboxIcon from '../assets/Inbox.png';
 import ProfileIcon from '../assets/Profile.png';
+import ProfileScreen from '../Screens/Dashboard/Profile/ProfileScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -96,7 +97,7 @@ const BottomTabBarScreen = () => {
         options={{ headerShown: false }}
         
       />
-      <Tab.Screen name="Profile" component={ConnectionScreen}
+      <Tab.Screen name="Profile" component={ProfileScreen}
         options={{ headerShown: false }}
         
       />

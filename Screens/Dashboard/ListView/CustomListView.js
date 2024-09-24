@@ -2,37 +2,14 @@ import React from 'react';
 import { View, FlatList, Text, ImageBackground, StyleSheet } from 'react-native';
 import { images } from '../../../HelperFiles/Images/Images';
 
-const CustomListView = ({ productData }) => {
-    const data = [
-        { id: '1', destinationImages: images.ThailandIcon },
-        { id: '2', destinationImages: images.ThailandIcon },
-
-
-    ];
-    console.log('Product Data is :', productData)
-    console.log('Product name is :', productData.name)
-
-    const renderItem = ({ item }) => (
-        <View key={item.id} style={styles.itemContainer}>
-          <ImageBackground
-            source={{ uri: item.image }}  // Use item.image for the image source
-            style={styles.imageBackground}
-            imageStyle={styles.imageStyle}
-          >
-            <View style={styles.textContainer}>
-              <Text style={styles.text}>{item.name}</Text>
-            </View>
-          </ImageBackground>
-        </View>
-      );
-      
-
+const CustomListView = ({ productData,renderItem, listTitle}) => {
+ 
     return (
         <View style={styles.container}>
             <View style={{
                 alignItems: 'center', justifyContent: 'center', width: 195, backgroundColor: '#167351', overflow: 'hidden', height: 34, marginTop: 41, borderTopRightRadius: 16, borderBottomRightRadius: 16
             }}>
-                <Text style={{ color: 'white', padding: 4 }}>Popular destination </Text>
+                <Text style={{ color: 'white', padding: 4 }}>{listTitle}</Text>
             </View>
             <View style={styles.flatContainer}>
                 <FlatList
@@ -51,12 +28,15 @@ const CustomListView = ({ productData }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1, // Parent container takes full height
+        backgroundColor:'white'
     },
     flatContainer: {
         flex: 1, // Ensure FlatList container takes full space
+        backgroundColor:'white'
     },
     listContent: {
         paddingHorizontal: 16, // Adjust padding if needed
+        backgroundColor:'white'
     },
     itemContainer: {
         width: 200, // Width of each item

@@ -27,5 +27,7 @@ export const images = {
     TodoIcon: require('../../assets/Todo.png'),
     AdventureIcon: require('../../assets/Adventures.png'),
     ThailandIcon: require('../../assets/Thailand.png'),
-
+    RatingIcon: require('../../assets/Rating.png'),
+     EditIcon: require('../../assets/Edit.png'),
+     UserIcon: require('../../assets/User.png'),
   };

@@ -1,50 +1,27 @@
-// Loader.js
-import React, { useEffect, useState } from 'react';
-import { View, ActivityIndicator, StyleSheet,Dimensions } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {StyleSheet, Text} from 'react-native';
+import LoaderKit from 'react-native-loader-kit'
+export default function CustomLoader() {
 
-const Loader = ({ duration = 3000, size = 'large', color = '#0000ff' }) => {
-  const [visible, setVisible] = useState(true);
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setVisible(false);
-    }, duration);
-
-    return () => clearTimeout(timer); // Cleanup the timer when component unmounts
-  }, [duration]);
-
-  if (!visible) return null;
+<LoaderKit
+  style={{ width: 50, height: 50 }}
+  name={'BallPulse'} // Optional: see list of animations below
+  color={'red'} // Optional: color can be: 'red', 'green',... or '#ddd', '#ffffff',...
+/>
 
   return (
-    <View style={styles.loaderContainer}>
-    <View style={styles.loaderWrapper}>
-      <ActivityIndicator size={size} color={color} />
-    </View>
-  </View>
+    <AnimatedLoader
+      visible={visible}
+      overlayColor="rgba(255,255,255,0.75)"
+      animationStyle={styles.lottie}
+      speed={1}>
+      <Text>Doing something...</Text>
+    </AnimatedLoader>
   );
-};
-const { width, height } = Dimensions.get('window');
-
+}
 const styles = StyleSheet.create({
-    loaderContainer: {
-        position: 'absolute',
-        width: width,
-        height: '120%',
-        alignSelf:'center',
-        justifyContent: 'center',  
-        alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
-        zIndex: 10, // Ensures loader stays on top of other elements
-      },
-      loaderWrapper: {
-        padding: 20,
-        backgroundColor: 'white',
-        borderRadius: 10,
-        // shadowColor: '#000',
-        // shadowOffset: { width: 0, height: 2 },
-        // shadowOpacity: 0.25,
-        // shadowRadius: 4,
-        // elevation: 5, // For Android shadow effect
-      },
+  lottie: {
+    width: 100,
+    height: 100,
+  },
 });
-
-export default Loader;
