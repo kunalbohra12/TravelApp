@@ -6,7 +6,7 @@ import axios from 'axios';
 import { images } from '../../../HelperFiles/Images/Images';
 import PagerView from 'react-native-pager-view';
 import Dots from 'react-native-dots-pagination';
-import CustomListView from '../ListView/CustomListView';
+import CustomListView from '../ListView/CustomList/CustomListView';
 import Loader from '../../../HelperFiles/Loader/CustomLoader';
 import ExploreScreen from '../Explore/ExploreScreen';
 import PlacesListView from '../ListView/PlacesList/PlacesListView';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, FlatList, Text, ImageBackground, StyleSheet } from 'react-native';
-import { images } from '../../../HelperFiles/Images/Images';
+import { images } from '../../../../HelperFiles/Images/Images';
 
 const CustomListView = ({ productData,renderItem, listTitle}) => {
  

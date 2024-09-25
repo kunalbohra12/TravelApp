@@ -30,4 +30,6 @@ export const images = {
     RatingIcon: require('../../assets/Rating.png'),
      EditIcon: require('../../assets/Edit.png'),
      UserIcon: require('../../assets/User.png'),
+     PlaceIcon: require('../../assets/PlaceIcon.png'),
+     Saved: require('../../assets/BookMark.png'),
   };

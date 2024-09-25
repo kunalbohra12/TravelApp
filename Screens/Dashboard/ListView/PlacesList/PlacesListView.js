@@ -5,9 +5,10 @@ import axios from 'axios';
 import { images } from '../../../../HelperFiles/Images/Images';
 import PagerView from 'react-native-pager-view';
 import Dots from 'react-native-dots-pagination';
-    
+import { useNavigation } from '@react-navigation/native';
 
 const PlacesListView = ({ productData }) => {
+    const navigation = useNavigation();
     const scrollX = React.useRef(new Animated.Value(0)).current;
     const [currentPage, setCurrentPage] = useState(0); // State to track the current page
     
@@ -70,7 +71,9 @@ const PlacesListView = ({ productData }) => {
         </PagerView>
         <View style={{ height: 78,backgroundColor:'white' }}>
             <View style={styles.btnStackView}>
-                <TouchableOpacity>
+                <TouchableOpacity
+                 onPress={() => navigation.navigate('Hotel')}
+                >
                     <View style={styles.tripOptionsBtn}>
                         <Image
                             source={images.HotelIcon}
@@ -78,7 +81,9 @@ const PlacesListView = ({ productData }) => {
                         <Text style={styles.title} >Hotels</Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity
+                 onPress={() => navigation.navigate('Flight')}
+                >
                     <View style={styles.tripOptionsBtn}>
                         <Image
                             source={images.FightIcon}
@@ -86,7 +91,9 @@ const PlacesListView = ({ productData }) => {
                         <Text style={styles.title} >Flight</Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity
+                 onPress={() => navigation.navigate('Flight')}
+                >
                     <View style={styles.tripOptionsBtn}>
                         <Image
                             source={images.TodoIcon}
@@ -94,7 +101,9 @@ const PlacesListView = ({ productData }) => {
                         <Text style={styles.title} >To do</Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('Flight')}
+                >
                     <View style={styles.tripOptionsBtn}>
                         <Image
                             source={images.AdventureIcon}

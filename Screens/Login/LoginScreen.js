@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, KeyboardAvoidingView, Platform, ScrollView, Image } from 'react-native';
+import { View, Text, TextInput, ActivityIndicator,TouchableOpacity, StyleSheet, SafeAreaView, KeyboardAvoidingView, Platform, ScrollView, Image } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import axios from 'axios';
 import { images } from '../../HelperFiles/Images/Images';
@@ -21,7 +21,6 @@ const LoginScreen = ({ navigation }) => {
   // Handle form submission
   const handleLoginManager = async (data) => {
     setShowLoader(true);
-   
     try {
       console.log('Form data:', data);
 
@@ -134,14 +133,13 @@ const LoginScreen = ({ navigation }) => {
           <TouchableOpacity style={styles.logInBtnView} onPress={handleSubmit(handleLoginManager)}>
             <Text style={{ color: 'white' }}>Log In</Text>
           </TouchableOpacity>
-          {showLoader && <Loader size="large" color="blue" />}
+          {showLoader && <ActivityIndicator size="large" color="blue" />}
           <View style={styles.signUpContainer}>
             <Text style={{ color: 'black', alignSelf: 'center' }}>Don't Have an account?</Text>
             <TouchableOpacity style={styles.signUpBtn} onPress={() => navigation.navigate('SignUp')}>
               <Text style={{ color: 'black' }}>Sign Up</Text>
             </TouchableOpacity>
             {/* {showLoader && <Loader size="large" color="blue" />} */}
-
           </View>
         </ScrollView>
       </KeyboardAvoidingView>

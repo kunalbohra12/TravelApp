@@ -6,15 +6,14 @@ import axios from 'axios';
 import { images } from '../../../HelperFiles/Images/Images';
 import PagerView from 'react-native-pager-view';
 import Dots from 'react-native-dots-pagination';
-import CustomListView from '../ListView/CustomListView';
 import PlacesListView from '../ListView/PlacesList/PlacesListView';
+import CustomListView from '../ListView/CustomList/CustomListView';
 import LottieView from 'lottie-react-native';
 const ExploreScreen = ({ navigation }) => {
     const scrollX = React.useRef(new Animated.Value(0)).current;
     const [currentPage, setCurrentPage] = useState(0); // State to track the current page
     const [showLoader, setShowLoader] = useState(false);
     const [product, setProduct] = useState([]);
-    const [categorylist, setCategoryList] = useState([]);
 
     useEffect(() => {
         dashBoardAPI();
@@ -42,10 +41,9 @@ const ExploreScreen = ({ navigation }) => {
 
             if (response.data.success) {
                 // console.log('dashboard API Call', dashboardData);
-                const topProduct = dashboardData.topsellingproduct
+                const topProduct = dashboardData
                 const categoryProductList = dashboardData.categorylist
                 setProduct(topProduct)
-                setCategoryList(categoryProductList)
             } else {
                 console.log('dashboard API Failed');
             }
@@ -95,14 +93,12 @@ const ExploreScreen = ({ navigation }) => {
                        </View>
                 ) : (
                     <>
-                        <CustomListView productData={product} renderItem={renderItem1} listTitle={'Popular Products'} />
+                        <CustomListView productData={product.topsellingproduct} renderItem={renderItem1} listTitle={'Popular Products'} />
                     </>
-
                 )}
             </ScrollView>
         </View>
         // </SafeAreaView >
-
     );
 };
 

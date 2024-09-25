@@ -13,6 +13,8 @@ import DestinationScreen from '../../Screens/Destination/DestinationScreen';
 import BottomTabBarScreen from '../../TabBar/BottomTabBar';
 import SplashScreen from '../../Screens/Splash/SplashScreen';
 import TripScreen from '../../Screens/Dashboard/Trips/TripsScreen';
+import HotelScreen from '../../Screens/Dashboard/Hotel/HotelScreen';
+import FlightScreen from '../../Screens/Dashboard/Filght/FlightScreen';
 const Stack = createStackNavigator();
 
 
@@ -53,7 +55,12 @@ const Navigator = () => {
         <Stack.Screen name="Home" component={HomeScreen}
           options={{ headerShown: false }}///ConnectionScrreen
         />
-        
+         <Stack.Screen name="Hotel" component={HotelScreen}
+          options={{ headerShown: false }}///ConnectionScrreen
+        />
+          <Stack.Screen name="Flight" component={FlightScreen}
+          options={{ headerShown: false }}///ConnectionScrreen
+        />
       </Stack.Navigator>
     </NavigationContainer>
     );

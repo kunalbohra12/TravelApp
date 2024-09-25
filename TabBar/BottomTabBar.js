@@ -9,18 +9,18 @@ import ForgotPasswordScreen from '../Screens/ForgotPassword/ForgotPasswordScreen
 import ConnectionScreen from '../Screens/Connect/ConnectionScreen';
 import ExploreScreen from '../Screens/Dashboard/Explore/ExploreScreen';
 import TripScreen from '../Screens/Dashboard/Trips/TripsScreen';
+
 // Import custom icon
 import { images } from '../HelperFiles/Images/Images';
-import ExploreIcon from '../assets/Explore.png';
-import TripIcon from '../assets/Trips.png';
-import SavedIcon from '../assets/Saved.png';
-import InboxIcon from '../assets/Inbox.png';
-import ProfileIcon from '../assets/Profile.png';
+// import ExploreIcon from '../assets/Explore.png';
+// import TripIcon from '../assets/Trips.png';
+// import SavedIcon from '../assets/Saved.png';
+// import InboxIcon from '../assets/Inbox.png';
+// import ProfileIcon from '../assets/Profile.png';
 import ProfileScreen from '../Screens/Dashboard/Profile/ProfileScreen';
-
+import SavedScreen from '../Screens/Dashboard/Saved/SavedScreen';
+import InboxScreen from '../Screens/Dashboard/Inbox/InboxScreen';
 const Tab = createBottomTabNavigator();
-
-
 const BottomTabBarScreen = () => {
   return (
     // <NavigationContainer>
@@ -37,7 +37,7 @@ const BottomTabBarScreen = () => {
           } else if (route.name === 'Inbox') {
             iconSource = focused ? images.InboxIcon : images.InboxIcon; // Use different images if you have active/inactive states
           }else if (route.name === 'Profile') {
-            iconSource = focused ? ProfileIcon : ProfileIcon; // Use different images if you have active/inactive states
+            iconSource = focused ? images.Profile : images.Profile; // Use different images if you have active/inactive states
           }
           return (
               <View>
@@ -90,16 +90,18 @@ const BottomTabBarScreen = () => {
       <Tab.Screen name="Trips" component={TripScreen}
         options={{ headerShown: false }}
       />
-      <Tab.Screen name="Saved" component={DashboardScreen}
+      <Tab.Screen name="Saved" component={SavedScreen}
         options={{ headerShown: false }}
       />
-      <Tab.Screen name="Inbox" component={ForgotPasswordScreen}
+      <Tab.Screen name="Inbox" component={InboxScreen}
         options={{ headerShown: false }}
         
       />
       <Tab.Screen name="Profile" component={ProfileScreen}
-        options={{ headerShown: false }}
-        
+        options={{
+          headerShown:false,
+          tabBarStyle: { display: 'none'} // Hide tab bar for this screen
+        }}         
       />
     </Tab.Navigator>
   );
